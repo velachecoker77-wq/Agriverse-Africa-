@@ -1,105 +1,115 @@
-<!DOCTYPE html><html><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Auth — Sign In / Sign Up — Every Farm Online</title>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agriverse Auth — Sign In Sign Up</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box} body{font-family:system-ui;background:#f5faf5}
-header{background:#0a4d1f;color:#fff;padding:12px}
-.wrap{max-width:420px;margin:20px auto;padding:14px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui;background:#f5faf5}
+header{background:#0a4d1f;color:#fff;padding:14px}
+.wrap{max-width:420px;margin:24px auto;padding:14px}
 .card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
-input{width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin:8px 0;font-size:14px}
-button{width:100%;padding:12px;border-radius:10px;border:none;font-weight:800;cursor:pointer;margin:6px 0}
-.btn-green{background:#0a4d1f;color:#fff} .btn-white{background:#fff;color:#0a4d1f;border:1px solid #0a4d1f}
-.small{font-size:11px;color:#666} .keybox{background:#f0fdf4;border:1px dashed #0a4d1f;padding:10px;border-radius:10px;margin:10px 0;font-size:12px;word-break:break-all}
+input{width:100%;padding:13px;border-radius:10px;border:1px solid #ddd;margin:8px 0;font-size:14px}
+button{width:100%;padding:13px;border-radius:10px;border:none;font-weight:800;cursor:pointer;margin:6px 0;font-size:14px}
+.btn-green{background:#0a4d1f;color:#fff}
+.btn-light{background:#e8f5e8;color:#0a4d1f}
+.keybox{background:#f0fdf4;border:2px dashed #0a4d1f;padding:12px;border-radius:10px;margin:12px 0;word-break:break-all;display:none}
 </style>
-</head><body>
-<header><b>AUTH</b> — Sign In / Sign Up — Agriverse — Sherbro Node 001 • <a href="index.html" style="color:#22c55e">Home</a></header>
+</head>
+<body>
+<header><b>AGRIVERSE AUTH</b> — Sign In / Sign Up — <a href="index.html" style="color:#22c55e">Home</a></header>
 <div class="wrap">
 <div class="card">
-<h3 id="title">Sign Up — Create Farm Account</h3>
-<small class="small">General service — farmer, buyer, feed supplier, investor — one account</small><br><br>
-
-<input id="name" placeholder="Full Name — e.g. Sierra Akker Owner">
-<input id="phone" placeholder="Phone — Orange Money — e.g. +23278XXXXX">
-<input id="email" placeholder="Email — optional — e.g. farmer@agriverseafrica.com">
-<input id="farm" placeholder="Farm ID — e.g. AG-POULTRY-001 or AG-CASSAVA-001">
-<input id="password" type="password" placeholder="Password — min 6 chars">
-
-<div class="keybox" id="keybox" style="display:none">
-<b>🔑 YOUR ACCOUNT KEY — SAVE AM — CANNOT RECOVER IF LOST</b><br>
-<span id="accountKey"></span><br><br>
-<small>Use this key to sign in on another phone, verify farm, claim wallet 80%</small><br>
-<button class="btn-white" onclick="copyKey()">Copy Account Key</button>
+<h3 id="title">Sign Up</h3>
+<p style="font-size:11px;color:#666;margin:6px 0">General — farmer, buyer, all farms — one key</p>
+<input id="name" placeholder="Full Name">
+<input id="phone" placeholder="Phone +232... Orange Money">
+<input id="farm" placeholder="Farm ID e.g. AG-POULTRY-001">
+<input id="password" type="password" placeholder="Password min 6">
+<div class="keybox" id="keybox">
+<b>🔑 YOUR ACCOUNT KEY — SAVE IT</b><br><br>
+<div id="accountKey" style="font-weight:800"></div><br>
+<button class="btn-light" onclick="copyKey()">Copy Key</button>
 </div>
-
-<button class="btn-green" id="actionBtn" onclick="signUp()">Create Account + Generate Key</button>
-<button class="btn-white" onclick="toggleMode()">Already have account? Sign In</button>
-
+<button class="btn-green" id="btn" onclick="signUp()">Create Account + Generate Key</button>
+<button class="btn-light" onclick="toggle()">Already have account? Sign In</button>
 <div id="msg" style="margin-top:12px;font-size:12px"></div>
-
-<div style="margin-top:16px;background:#e8f5e8;padding:10px;border-radius:10px;font-size:11px">
-<b>How Account Key works — No import, 100% local:</b><br>
-1. Sign Up → we generate SHA256 Account Key from phone + farm_id + time<br>
-2. Key = your farm ownership proof — like blockchain private key<br>
-3. Sign In with Phone + Password OR Phone + Account Key<br>
-4. All data (pilot-data, wallet, map) link to this key — Data Sovereignty Act 2023<br>
-5. For now na localStorage (pilot) — later Firebase/Supabase — same key format
-</div>
 </div>
 </div>
 <script>
 let mode='up';
 let currentKey='';
-function toggleMode(){
-if(mode==='up'){mode='in';document.getElementById('title').innerText='Sign In — Every Farm Online';document.getElementById('actionBtn').innerText='Sign In';document.getElementById('actionBtn').setAttribute('onclick','signIn()');document.getElementById('name').style.display='none';document.getElementById('farm').style.display='none';document.getElementById('keybox').style.display='none';}
-else{mode='up';document.getElementById('title').innerText='Sign Up — Create Farm Account';document.getElementById('actionBtn').innerText='Create Account + Generate Key';document.getElementById('actionBtn').setAttribute('onclick','signUp()');document.getElementById('name').style.display='block';document.getElementById('farm').style.display='block';}
+function toggle(){
+if(mode==='up'){
+mode='in';
+document.getElementById('title').innerText='Sign In';
+document.getElementById('btn').innerText='Sign In';
+document.getElementById('btn').setAttribute('onclick','signIn()');
+document.getElementById('name').style.display='none';
+document.getElementById('farm').style.display='none';
+document.getElementById('keybox').style.display='none';
+}else{
+mode='up';
+document.getElementById('title').innerText='Sign Up';
+document.getElementById('btn').innerText='Create Account + Generate Key';
+document.getElementById('btn').setAttribute('onclick','signUp()');
+document.getElementById('name').style.display='block';
+document.getElementById('farm').style.display='block';
+}
 }
 function genKey(phone,farm){
 let base=phone+'|'+farm+'|'+Date.now()+'|'+Math.random()+'|Sherbro-Node-001';
-let hash=0;for(let i=0;i<base.length;i++){hash=((hash<<5)-hash)+base.charCodeAt(i);hash=hash&hash;}
+let hash=0;
+for(let i=0;i<base.length;i++){hash=((hash<<5)-hash)+base.charCodeAt(i);hash=hash&hash;}
 return 'AG-'+Math.abs(hash).toString(16).toUpperCase()+'-'+btoa(phone).slice(0,6).toUpperCase()+'-'+Date.now().toString(16).toUpperCase().slice(-6);
 }
 function signUp(){
 let name=document.getElementById('name').value.trim();
 let phone=document.getElementById('phone').value.trim();
-let email=document.getElementById('email').value.trim();
 let farm=document.getElementById('farm').value.trim()||'AG-POULTRY-001';
 let pass=document.getElementById('password').value.trim();
-if(!phone||!pass||pass.length<6){document.getElementById('msg').innerHTML='<b style="color:red">Phone + Password 6+ chars required</b>';return;}
+if(!phone||pass.length<6){document.getElementById('msg').innerHTML='<b style="color:red">Phone + 6 char password needed</b>';return;}
 let key=genKey(phone,farm);
 currentKey=key;
-let user={name,phone,email,farm,password:pass,accountKey:key,created:new Date().toISOString(),node:'Sherbro Node 001'};
+let user={name:name,phone:phone,farm:farm,password:pass,accountKey:key,created:new Date().toISOString()};
 localStorage.setItem('agriverse_user_'+phone,JSON.stringify(user));
 localStorage.setItem('agriverse_current',phone);
 localStorage.setItem('agriverse_key',key);
 document.getElementById('accountKey').innerText=key;
 document.getElementById('keybox').style.display='block';
-document.getElementById('msg').innerHTML=`<b style="color:#0a4d1f">✅ Account created — ${name} — ${farm}<br>Phone: ${phone}<br>Key saved to phone. Now you fit go Dashboard → Wallet → Map — all linked to this key.</b><br><br><button class="btn-green" onclick="location.href='dashboard.html'">Go Dashboard</button>`;
+document.getElementById('msg').innerHTML='<b style="color:green">✅ Account created — '+farm+'</b><br><br><button class="btn-green" onclick="location.href=\'dashboard.html\'">Go Dashboard</button>';
 }
 function signIn(){
 let phone=document.getElementById('phone').value.trim();
 let pass=document.getElementById('password').value.trim();
-if(!phone||!pass){document.getElementById('msg').innerHTML='<b style="color:red">Phone + Password required. Or paste Account Key in Password field</b>';return;}
+if(!phone||!pass){document.getElementById('msg').innerHTML='<b style="color:red">Phone + Password or Account Key needed</b>';return;}
 let raw=localStorage.getItem('agriverse_user_'+phone);
 if(raw){
 let u=JSON.parse(raw);
 if(u.password===pass||u.accountKey===pass){
 localStorage.setItem('agriverse_current',phone);
 localStorage.setItem('agriverse_key',u.accountKey);
-document.getElementById('msg').innerHTML=`<b style="color:#0a4d1f">✅ Welcome back ${u.name} — ${u.farm}<br>Key: ${u.accountKey}</b><br><br><button class="btn-green" onclick="location.href='dashboard.html'">Go Dashboard</button>`;
+document.getElementById('msg').innerHTML='<b style="color:green">✅ Welcome '+u.name+' — '+u.farm+'</b><br><br><button class="btn-green" onclick="location.href=\'dashboard.html\'">Go Dashboard</button>';
 return;
 }
 }
-if(pass.startsWith('AG-')){
-let all=Object.keys(localStorage).filter(k=>k.startsWith('agriverse_user_'));
-for(let k of all){let u=JSON.parse(localStorage.getItem(k));if(u.accountKey===pass){localStorage.setItem('agriverse_current',u.phone);localStorage.setItem('agriverse_key',u.accountKey);document.getElementById('msg').innerHTML=`<b style="color:#0a4d1f">✅ Signed in with Account Key — ${u.name} — ${u.farm}</b><br><br><button class="btn-green" onclick="location.href='dashboard.html'">Go Dashboard</button>`;return;}}
+let keys=Object.keys(localStorage).filter(k=>k.startsWith('agriverse_user_'));
+for(let k of keys){
+let u=JSON.parse(localStorage.getItem(k));
+if(u.accountKey===pass){
+localStorage.setItem('agriverse_current',u.phone);
+localStorage.setItem('agriverse_key',u.accountKey);
+document.getElementById('msg').innerHTML='<b style="color:green">✅ Signed in with Key — '+u.name+'</b><br><br><button class="btn-green" onclick="location.href=\'dashboard.html\'">Go Dashboard</button>';
+return;
 }
-document.getElementById('msg').innerHTML='<b style="color:red">❌ No account found for this phone. Sign Up first — or paste correct Account Key</b>';
+}
+document.getElementById('msg').innerHTML='<b style="color:red">No account found — Sign Up first</b>';
 }
 function copyKey(){
-navigator.clipboard.writeText(currentKey||document.getElementById('accountKey').innerText).then(()=>{document.getElementById('msg').innerHTML='<b style="color:#0a4d1f">🔑 Key copied — save for WhatsApp, save for Orange Money claim</b>';});
+navigator.clipboard.writeText(currentKey);
+document.getElementById('msg').innerHTML='<b style="color:green">Key copied</b>';
 }
-// auto fill if logged
-let cur=localStorage.getItem('agriverse_current');
-if(cur){let u=JSON.parse(localStorage.getItem('agriverse_user_'+cur)||'{}');if(u.phone){document.getElementById('phone').value=u.phone;}}
 </script>
-</body></html>
+</body>
+</html>
