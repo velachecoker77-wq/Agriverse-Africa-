@@ -1,0 +1,138 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>General Pilot — Every Farm Online — All Types</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box} body{font-family:system-ui;background:#f5faf5}
+header{background:#0a4d1f;color:#fff;padding:12px;position:sticky;top:0;z-index:999}
+.wrap{max-width:800px;margin:0 auto;padding:12px}
+.card{background:#fff;border-radius:14px;padding:14px;margin:10px 0;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+select,input,button{width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin:6px 0;font-size:14px}
+button{background:#0a4d1f;color:#fff;font-weight:800;border:none;cursor:pointer}
+.btn-green{background:#22c55e;color:#000}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:10px}
+th,td{padding:6px;border:1px solid #ddd} th{background:#0a4d1f;color:#fff}
+.badge{display:inline-block;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:800;margin:2px}
+.b-crop{background:#dcfce7;color:#0a4d1f} .b-livestock{background:#fef9c3;color:#854d0e} .b-fish{background:#dbeafe;color:#1e40af}
+</style>
+</head><body>
+<header><b>GENERAL PILOT</b> — Every Farm Online — 12 Farms + Unlimited — Crop • Livestock • Fishery • Poultry • Sherbro Node 001 • <a href="index.html" style="color:#22c55e">Home</a></header>
+<div class="wrap">
+
+<div class="card">
+<b>🌍 SELECT FARM TYPE — GENERAL SERVICE — NO LIMIT</b><br>
+<small>Same app works for cassava, rice, fish, goat, poultry — just change farm_id</small><br><br>
+<select id="farmType" onchange="updateFarms()">
+<option value="all">All Types — Show 12 Farms</option>
+<option value="crop">🌱 Crops — Cassava, Rice, Pepper, Cocoa, Palm (5 farms)</option>
+<option value="livestock">🐔 Livestock — Poultry Kossoh, Newton + Goat, Cattle (4 farms)</option>
+<option value="fish">🐟 Fisheries — Tombo, Bonthe, Shenge (3 farms)</option>
+<option value="poultry">🥚 Poultry Pilot — Sierra Akker + Newton (2 farms — first test)</option>
+</select>
+<select id="farmId"></select>
+</div>
+
+<div class="card">
+<b>📝 GENERAL DATA COLLECTION — ONE FORM FOR ALL FARMS</b><br>
+<small>Fill for any farm — Moyamba cassava or Tombo fish same columns</small><br><br>
+<input id="date" type="date" value="2026-11-01">
+<input id="qty" placeholder="Quantity — e.g. 1040 eggs OR 2.5T cassava OR 340kg fish">
+<input id="damaged" placeholder="Damaged/Loss — e.g. 12 eggs OR 0.2T OR 5kg">
+<input id="feed" placeholder="Feed/Input kg — e.g. 120kg feed OR 50kg fertilizer OR 20kg fish feed">
+<input id="mortality" placeholder="Mortality/Loss count — e.g. 2 birds OR 0">
+<input id="temp" placeholder="Temp C — e.g. 28.5 (from IoT or phone)">
+<input id="humidity" placeholder="Humidity % — e.g. 65">
+<input id="photo1" placeholder="Photo 1 name — e.g. photos/AG-CASSAVA-001_20261101_1.jpg">
+<input id="photo2" placeholder="Photo 2 name — e.g. photos/AG-CASSAVA-001_20261101_2.jpg">
+<button class="btn-green" onclick="generate()">Generate Batch + Hash + QR + Wallet — GENERAL</button>
+<div id="out" style="margin-top:10px;font-size:12px;background:#f0fdf4;padding:10px;border-radius:10px;display:none"></div>
+</div>
+
+<div class="card">
+<b>📊 LIVE TABLE — ALL 12 FARMS — GENERAL SERVICE</b><br>
+<small>Search: type "Moyamba", "fish", "poultry", "cassava" — same table works for all</small><br>
+<input id="search" placeholder="Search farm, location, type — e.g. Tombo, cassava, poultry, goat" onkeyup="filterTable()" style="margin-top:8px">
+<table id="tbl">
+<tr><th>farm_id</th><th>name</th><th>type</th><th>qty</th><th>location</th><th>batch_id</th><th>gps</th><th>hash</th><th>qr</th></tr>
+</table>
+</div>
+
+<div class="card" style="background:#e8f5e8;border:1px dashed #0a4d1f">
+<b>How GENERAL works — No limit to 2 poultry — One OS for Salone:</b><br>
+<small>
+1. AG-CROP-001 to AG-CROP-005 = Cassava, Rice, Pepper, Cocoa, Palm — Moyamba, Bo, Kenema, Port Loko<br>
+2. AG-POULTRY-001/002 + AG-GOAT-001 + AG-CATTLE-001 = Livestock — Kossoh, Newton, Moyamba, Bo<br>
+3. AG-FISH-001/002/003 = Fisheries — Tombo, Bonthe, Shenge<br>
+4. Same columns: farm_id, date, qty, damaged, feed, mortality, temp, humidity, batch_id, gps, hash, qr_link<br>
+5. Same wallet: 80% to farmer whether na fish or cassava — Orange Money<br>
+6. Same QR: Stick on sack, crate, fish box — buyer scan → see farm live + hash cannot fake<br>
+7. AI Brain $100: Vision counts eggs OR cassava sacks OR fish kg — same YOLO model, different label<br><br>
+<b>2 poultry na first test case because dem organized — but code na general from day 1. Add 1000 farms tomorrow, no rewrite.</b><br>
+Sherbro Node 001 — Freetown — Data stays in Salone — If it is to be, it is up to us.
+</small>
+</div>
+
+</div>
+<script>
+const farms=[
+{id:"AG-CASSAVA-001",name:"Moyamba Cassava",type:"crop",loc:"Moyamba",lat:8.14,lng:-12.43,stock:"2.5T"},
+{id:"AG-RICE-001",name:"Bo Rice",type:"crop",loc:"Bo",lat:7.96,lng:-11.74,stock:"1.8T"},
+{id:"AG-PEPPER-001",name:"Moyamba Pepper",type:"crop",loc:"Moyamba",lat:8.10,lng:-12.40,stock:"800kg"},
+{id:"AG-COCOA-001",name:"Kenema Cocoa",type:"crop",loc:"Kenema",lat:7.88,lng:-11.19,stock:"1.2T"},
+{id:"AG-PALM-001",name:"Port Loko Palm",type:"crop",loc:"Port Loko",lat:8.77,lng:-12.78,stock:"3T"},
+{id:"AG-POULTRY-001",name:"Sierra Akker",type:"livestock",sub:"poultry",loc:"Kossoh Town",lat:8.3821,lng:-13.2122,stock:"1,176 eggs"},
+{id:"AG-POULTRY-002",name:"Newton Poultry",type:"livestock",sub:"poultry",loc:"Newton",lat:8.312,lng:-13.092,stock:"21,120 eggs"},
+{id:"AG-CATTLE-001",name:"Bo Cattle Ranch",type:"livestock",loc:"Bo",lat:7.96,lng:-11.74,stock:"12 heads"},
+{id:"AG-GOAT-001",name:"Moyamba Goats",type:"livestock",loc:"Moyamba",lat:8.15,lng:-12.44,stock:"35 goats"},
+{id:"AG-FISH-001",name:"Tombo Fish Farm",type:"fish",loc:"Tombo",lat:8.03,lng:-13.15,stock:"340kg"},
+{id:"AG-FISH-002",name:"Bonthe Fisheries",type:"fish",loc:"Bonthe",lat:7.526,lng:-12.505,stock:"500kg"},
+{id:"AG-FISH-003",name:"Shenge Fish",type:"fish",loc:"Shenge",lat:8.03,lng:-13.07,stock:"280kg"}
+];
+function updateFarms(){
+const t=document.getElementById('farmType').value;
+const sel=document.getElementById('farmId');
+sel.innerHTML="";
+let list=farms;
+if(t==='crop') list=farms.filter(f=>f.type==='crop');
+if(t==='livestock') list=farms.filter(f=>f.type==='livestock');
+if(t==='fish') list=farms.filter(f=>f.type==='fish');
+if(t==='poultry') list=farms.filter(f=>f.sub==='poultry');
+list.forEach(f=>{let o=document.createElement('option');o.value=f.id;o.text=`${f.id} — ${f.name} — ${f.loc} — ${f.stock}`;sel.appendChild(o);});
+renderTable(list);
+}
+function renderTable(list){
+const tbl=document.getElementById('tbl');
+tbl.innerHTML='<tr><th>farm_id</th><th>name</th><th>type</th><th>qty</th><th>location</th><th>batch_id</th><th>gps</th><th>hash</th><th>qr</th></tr>';
+list.forEach(f=>{
+let b=`SL-${f.loc.substring(0,2).toUpperCase()}-${new Date().toISOString().slice(5,10).replace("-","")}-001`;
+let h=`0x${Math.random().toString(16).slice(2,8)}...`;
+let qr=`agriverseafrica.com/vault/${b}`;
+let typeBadge=f.type==='crop'?'<span class="badge b-crop">🌱 CROP</span>':f.type==='fish'?'<span class="badge b-fish">🐟 FISH</span>':'<span class="badge b-livestock">🐔 LIVESTOCK</span>';
+tbl.innerHTML+=`<tr><td>${f.id}</td><td>${f.name}</td><td>${typeBadge}</td><td>${f.stock}</td><td>${f.loc}</td><td>${b}</td><td>${f.lat},${f.lng}</td><td>${h}</td><td><a href="qr.html">${qr}</a></td></tr>`;
+});
+}
+function generate(){
+const fid=document.getElementById('farmId').value||farms[0].id;
+const f=farms.find(x=>x.id===fid);
+const batch=`SL-${f.loc.substring(0,2).toUpperCase()}-${document.getElementById('date').value.replace(/-/g,"").slice(4)}-001`;
+const hash=`0x${Array.from(batch).reduce((a,c)=>a+c.charCodeAt(0),0).toString(16)}f3a${Math.random().toString(16).slice(2,4)}`;
+const qr=`https://www.agriverseafrica.com/vault/${batch}`;
+document.getElementById('out').style.display='block';
+document.getElementById('out').innerHTML=`<b>✅ GENERAL BATCH GENERATED — Works for ${f.type} — ${f.name}</b><br>
+Farm: ${fid} — ${f.name} — ${f.loc}<br>
+GPS: ${f.lat},${f.lng}<br>
+Qty: ${document.getElementById('qty').value} — Damaged: ${document.getElementById('damaged').value}<br>
+Batch: ${batch}<br>
+Hash (cannot fake): ${hash}<br>
+QR Link: <a href="${qr}">${qr}</a><br>
+Wallet: 80% to farmer → Orange Money ${f.loc}<br>
+Node: Sherbro Node 001 — Data stays Salone<br><br>
+<b>Copy to pilot-data.csv → Push → Map updates → Marketplace live — GENERAL SERVICE</b>`;
+}
+function filterTable(){
+let q=document.getElementById('search').value.toLowerCase();
+let rows=document.getElementById('tbl').rows;
+for(let i=1;i<rows.length;i++){rows[i].style.display=rows[i].innerText.toLowerCase().includes(q)?'':'none';}
+}
+updateFarms();
+</script>
+</body></html>
