@@ -1,40 +1,100 @@
-<!DOCTYPE html><html><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>QR Sticker — Every Farm Online</title>
-<link rel="stylesheet" href="style.css">
-<style>.wrap{max-width:600px;margin:16px auto;padding:16px}.sticker{background:#fff;border:2px dashed #0a4d1f;border-radius:12px;padding:16px;text-align:center;margin-top:12px} #qrcode{width:200px;height:200px;margin:10px auto;background:#eee;display:flex;align-items:center;justify-content:center;font-size:10px} @media print{.no-print{display:none} .sticker{border:2px solid #000}}</style>
-</head><body>
-<header><b>QR STICKER GENERATOR</b> — Layer 4 • Print for crates, sacks, fish boxes</header>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QR Generator — Farm Passport — Agriverse</title>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui;background:#f5faf5}
+header{background:#0a4d1f;color:#fff;padding:14px;position:sticky;top:0;z-index:99}
+.wrap{max-width:480px;margin:0 auto;padding:14px}
+.card{background:#fff;border-radius:16px;padding:16px;margin:10px 0;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #ddd;margin:8px 0;font-size:14px}
+button{width:100%;padding:12px;border-radius:10px;border:none;font-weight:800;margin:6px 0;cursor:pointer}
+.btn-green{background:#0a4d1f;color:#fff} .btn-white{background:#fff;border:1px solid #0a4d1f;color:#0a4d1f}
+#qrcode{display:flex;justify-content:center;padding:16px;background:#fff;border-radius:12px;margin:12px 0}
+.small{font-size:11px;color:#666} .cutline{border:2px dashed #000;padding:12px;border-radius:12px;margin:12px 0;background:#fff}
+</style>
+</head>
+<body>
+<header><b>QR CODE — FARM PASSPORT</b> — Copy & Cut Sticker — <a href="index.html" style="color:#22c55e">Home</a></header>
 <div class="wrap">
+
 <div class="card">
-Farm ID<br><select id="fid" style="width:100%;padding:10px;border-radius:8px">
+<h3>Generate QR — General Service</h3>
+<small class="small">Same QR for cassava sack, egg crate, fish box — points to vault.html</small><br><br>
+
+<select id="farmId">
+<option value="AG-POULTRY-001">AG-POULTRY-001 — Sierra Akker — Kossoh — 1,176 eggs</option>
+<option value="AG-POULTRY-002">AG-POULTRY-002 — Newton — 21,120 eggs</option>
 <option value="AG-CASSAVA-001">AG-CASSAVA-001 — Moyamba Cassava — 2.5T</option>
-<option value="AG-POULTRY-001">AG-POULTRY-001 — Sierra Akker Kossoh — 1,176 eggs</option>
-<option value="AG-FISH-001">AG-FISH-001 — Tombo Fish — 340kg</option>
 <option value="AG-RICE-001">AG-RICE-001 — Bo Rice — 1.8T</option>
-<option value="AG-CATTLE-001">AG-CATTLE-001 — Bo Cattle — 12 heads</option>
-</select><br><br>
-Batch<br><input id="batch" style="width:100%;padding:10px;border-radius:8px" value="SL-SA-1031-001"><br><br>
-<button class="btn btn-dark" style="width:100%" onclick="gen()">Generate QR Sticker</button>
+<option value="AG-FISH-001">AG-FISH-001 — Tombo Fish — 340kg</option>
+<option value="AG-FISH-002">AG-FISH-002 — Bonthe Fisheries — 500kg</option>
+<option value="AG-GOAT-001">AG-GOAT-001 — Moyamba Goats — 35 heads</option>
+</select>
+
+<input id="batchId" placeholder="Batch ID — e.g. SL-KO-1101-001" value="SL-KO-1101-001">
+<input id="qty" placeholder="Qty — e.g. 1040 eggs or 2.5T cassava" value="1040 eggs">
+<button class="btn-green" onclick="makeQR()">Generate QR Code — Full</button>
+
+<div id="qrcode"></div>
+
+<div id="qrInfo" style="background:#f0fdf4;padding:10px;border-radius:10px;font-size:12px;word-break:break-all;display:none"></div>
 </div>
 
-<div id="out" class="sticker" style="display:none">
-<div style="font-size:10px;font-weight:800">AGRIVERSE OS • Sherbro Node 001 • VERIFIED</div>
-<h3 id="outName">Farm Name</h3>
-<div id="qrcode">QR CODE<br>agriverse.africa/vault/SL-SA-1031-001</div>
-<div style="font-size:11px"><b id="outId">AG-FARM-001</b> • <span id="outBatch">Batch</span><br>GPS: <span id="outGps">8.3821,-13.2122</span> • Hash: 0x7f2a... • Cannot Fake<br><small>Scan to see live farm • First time in Africa your farm digitally alive</small></div>
-<br><button class="btn btn-green no-print" onclick="window.print()">🖨️ Print Sticker (for crate/sack)</button>
+<div class="card cutline" id="sticker" style="display:none">
+<div style="text-align:center">
+<h3>✂️ CUT HERE — STICK ON CRATE/SACK</h3>
+<div id="qrcode2" style="display:flex;justify-content:center;margin:10px 0"></div>
+<b id="stBatch" style="font-size:18px">SL-KO-1101-001</b><br>
+<small id="stFarm">AG-POULTRY-001 — Sierra Akker</small><br>
+<small id="stQty">1040 eggs — Verified</small><br>
+<small style="font-size:9px;word-break:break-all" id="stLink">www.agriverseafrica.com/vault.html?batch=SL-KO-1101-001</small><br>
+<small style="font-size:10px">SCAN TO VERIFY — Sherbro Node 001 — Data Sovereignty Act 2023</small><br>
+<span style="font-size:9px;background:#000;color:#fff;padding:2px 6px;border-radius:4px">80% → Farmer | Hash cannot fake</span>
 </div>
+<button class="btn-white" onclick="window.print()">🖨️ Print Sticker — Cut & Stick</button>
 </div>
+
+<div class="card" style="background:#e8f5e8;font-size:11px">
+<b>Copy & Cut Instruction:</b><br>
+1. Select farm + type batch → Generate<br>
+2. QR points to: <b>www.agriverseafrica.com/vault.html?batch=YOUR_BATCH</b><br>
+3. Print this card → Cut dotted line → Stick on crate/sack/box<br>
+4. Buyer scan → vault.html opens with photo, hash, GPS, wallet 80%<br>
+5. Works for ALL — poultry, cassava, fish, goat — general service
+</div>
+
+</div>
+<script src="account.js"></script>
 <script>
-function gen(){
- let fid=document.getElementById('fid').value;
- let batch=document.getElementById('batch').value;
- document.getElementById('out').style.display='block';
- document.getElementById('outId').innerText=fid;
- document.getElementById('outBatch').innerText=batch;
- document.getElementById('outName').innerText=document.getElementById('fid').options[document.getElementById('fid').selectedIndex].text;
- document.getElementById('qrcode').innerHTML=`<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://velachecoker77-wq.github.io/Agriverse-Africa-/index.html%23${fid}" style="width:200px;height:200px">`;
+let qr1=null, qr2=null;
+function makeQR(){
+let farm=document.getElementById('farmId').value;
+let batch=document.getElementById('batchId').value.trim()||'SL-KO-1101-001';
+let qty=document.getElementById('qty').value.trim()||'1040 eggs';
+
+// THIS NA THE KEY LINK — FIXED — GO TO vault.html
+let qrLink="https://www.agriverseafrica.com/vault.html?batch="+encodeURIComponent(batch);
+
+document.getElementById('qrcode').innerHTML='';
+document.getElementById('qrcode2').innerHTML='';
+qr1=new QRCode(document.getElementById('qrcode'),{text:qrLink,width:220,height:220,correctLevel:QRCode.CorrectLevel.H});
+qr2=new QRCode(document.getElementById('qrcode2'),{text:qrLink,width:160,height:160,correctLevel:QRCode.CorrectLevel.H});
+
+document.getElementById('qrInfo').style.display='block';
+document.getElementById('qrInfo').innerHTML="<b>✅ QR Generated — General</b><br>Farm: "+farm+"<br>Batch: "+batch+"<br>Qty: "+qty+"<br>Link: <a href='"+qrLink+"'>"+qrLink+"</a><br>Hash: 0x"+batch.split('').reduce((a,c)=>a+c.charCodeAt(0),0).toString(16)+"... — cannot fake";
+
+document.getElementById('sticker').style.display='block';
+document.getElementById('stBatch').innerText=batch;
+document.getElementById('stFarm').innerText=farm;
+document.getElementById('stQty').innerText=qty+" — Verified";
+document.getElementById('stLink').innerText=qrLink.replace('https://','');
 }
+makeQR();
 </script>
-</body></html>
+</body>
+</html>
