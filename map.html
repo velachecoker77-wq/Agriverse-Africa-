@@ -1,0 +1,49 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agriverse Map — Every Farm Online — 12 Farms GPS</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui;background:#f5faf5}
+header{background:#0a4d1f;color:#fff;padding:12px 14px;position:sticky;top:0;z-index:1000}
+#map{height:85vh;width:100%}
+.legend{position:absolute;bottom:20px;left:12px;background:#fff;padding:10px;border-radius:10px;z-index:1000;font-size:12px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.btn{padding:8px 12px;border-radius:8px;border:none;font-weight:800;background:#0a4d1f;color:#fff}
+</style>
+</head><body>
+<header><b>AGRIVERSE MAP</b> — Every Farm Online • 12 Farms Live • Sherbro Node 001 • <span id="cnt">Loading</span> • <a href="index.html" style="color:#22c55e;text-decoration:underline">Home</a></header>
+<div id="map"></div>
+<div class="legend">
+<b>Legend:</b><br>
+🌱 Crops 5 • 🐔 Livestock 4 • 🐟 Fisheries 3<br><br>
+<b>Click pin → View passport</b><br><br>
+<button class="btn" onclick="location.href='marketplace.html'">Marketplace</button>
+<button class="btn" style="background:#22c55e;color:#000" onclick="location.href='dashboard.html'">Dashboard</button>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const farms=[
+{id:"AG-CASSAVA-001",name:"Moyamba Cassava",type:"crop",lat:8.14,lng:-12.43,stock:"2.5T",loc:"Moyamba"},
+{id:"AG-RICE-001",name:"Bo Rice",type:"crop",lat:7.96,lng:-11.74,stock:"1.8T",loc:"Bo"},
+{id:"AG-PEPPER-001",name:"Moyamba Pepper",type:"crop",lat:8.10,lng:-12.40,stock:"800kg",loc:"Moyamba"},
+{id:"AG-COCOA-001",name:"Kenema Cocoa",type:"crop",lat:7.88,lng:-11.19,stock:"1.2T",loc:"Kenema"},
+{id:"AG-PALM-001",name:"Port Loko Palm",type:"crop",lat:8.77,lng:-12.78,stock:"3T",loc:"Port Loko"},
+{id:"AG-POULTRY-001",name:"Sierra Akker",type:"livestock",lat:8.3821,lng:-13.2122,stock:"1,176 eggs",loc:"Kossoh Town"},
+{id:"AG-POULTRY-002",name:"Newton Poultry",type:"livestock",lat:8.312,lng:-13.092,stock:"21,120 eggs",loc:"Newton"},
+{id:"AG-CATTLE-001",name:"Bo Cattle Ranch",type:"livestock",lat:7.96,lng:-11.74,stock:"12 heads",loc:"Bo"},
+{id:"AG-GOAT-001",name:"Moyamba Goats",type:"livestock",lat:8.15,lng:-12.44,stock:"35 goats",loc:"Moyamba"},
+{id:"AG-FISH-001",name:"Tombo Fish Farm",type:"fish",lat:8.03,lng:-13.15,stock:"340kg",loc:"Tombo"},
+{id:"AG-FISH-002",name:"Bonthe Fisheries",type:"fish",lat:7.526,lng:-12.505,stock:"500kg",loc:"Bonthe"},
+{id:"AG-FISH-003",name:"Shenge Fish",type:"fish",lat:8.03,lng:-13.07,stock:"280kg",loc:"Shenge"}
+];
+const map=L.map('map').setView([8.2,-12.5],7.5);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'Agriverse OS • Sherbro Node 001'}).addTo(map);
+const icons={crop:"🌱",livestock:"🐔",fish:"🐟"};
+farms.forEach(f=>{
+let emoji=icons[f.type]||"📍";
+let popup=`<b>${emoji} ${f.name}</b><br>ID: ${f.id}<br>Type: ${f.type}<br>Loc: ${f.loc}<br>Stock: ${f.stock}<br>GPS: ${f.lat},${f.lng}<br><br><a href="index.html#${f.id}">View Passport</a> | <a href="marketplace.html">Buy</a><br><small>Verified Sherbro Node 001</small>`;
+L.marker([f.lat,f.lng]).addTo(map).bindPopup(popup);
+});
+document.getElementById('cnt').innerText=farms.length+" farms live";
+</script>
+</body></html>
