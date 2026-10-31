@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agriverse Marketplace — Every Farm Online</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body{background:#f5faf5;margin:0;font-family:Inter,system-ui}
+header{background:#0a4d1f;color:#fff;padding:14px 20px;display:flex;justify-content:space-between}
+.search{max-width:900px;margin:20px auto;padding:0 20px}
+.input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid #cbd5d1;font-size:16px;box-sizing:border-box}
+.filters{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
+.filter{padding:6px 12px;border-radius:20px;border:1px solid #0a4d1f;background:#fff;font-size:12px;font-weight:700;cursor:pointer}
+.filter.active{background:#0a4d1f;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:16px}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.06)}
+.card img{width:100%;height:140px;object-fit:cover}
+.card .p{padding:12px}
+.tag{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:800}
+.tag-crop{background:#a3e635}.tag-livestock{background:#facc15}.tag-fish{background:#38bdf8}
+.buy{width:100%;background:#0a4d1f;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:800;margin-top:8px}
+</style>
+</head>
+<body>
+<header><div><b>AGRIVERSE MARKETPLACE</b> — Every Farm Online</div><div style="font-size:11px">Sherbro Node 001 • Orange Money Ready</div></header>
+
+<div class="search">
+<input id="q" class="input" placeholder="Search: fish Tombo, cassava Moyamba, poultry Kossoh, rice Bo, cattle..." oninput="AgriverseMarket.search(this.value)">
+<div class="filters">
+<button class="filter active" onclick="AgriverseMarket.filter('all',this)">All Farms</button>
+<button class="filter" onclick="AgriverseMarket.filter('crop',this)">🌱 Crops</button>
+<button class="filter" onclick="AgriverseMarket.filter('livestock',this)">🐔 Livestock</button>
+<button class="filter" onclick="AgriverseMarket.filter('fish',this)">🐟 Fisheries</button>
+<button class="filter" onclick="AgriverseMarket.filter('nearby',this)">📍 Near Me</button>
+</div>
+<div id="results" class="grid"></div>
+</div>
+
+<script src="agriverse-core.js"></script>
+<script>
+const farms=[
+ {id:"AG-CASSAVA-001",type:"crop",tag:"CROP",name:"Moyamba Cassava",loc:"Moyamba",batch:"SL-CS-1031-001",stock:"2.5T",price:"Le 2.5M/T",gps:"8.14,-12.43",img:"https://images.unsplash.com/photo-1501004318641-b72bc90f6c76?w=400",hash:"0x7f2a...",phone:"+23278XXXXX"},
+ {id:"AG-POULTRY-001",type:"livestock",tag:"LIVESTOCK",name:"Sierra Akker",loc:"Kossoh Town",batch:"SL-SA-1031-001",stock:"1,176 eggs",price:"Le 120k/crate",gps:"8.3821,-13.2122",img:"https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=400",hash:"0x9e4b...",phone:"+23278XXXXX"},
+ {id:"AG-POULTRY-002",type:"livestock",tag:"LIVESTOCK",name:"Newton Poultry",loc:"Newton",batch:"SL-NP-1031-002",stock:"21,120 eggs",price:"Le 115k/crate",gps:"8.3120,-13.0920",img:"https://images.unsplash.com/photo-1589923188651-268a9765e432?w=400",hash:"0x1c8d...",phone:"+23278XXXXX"},
+ {id:"AG-FISH-001",type:"fish",tag:"FISHERIES",name:"Tombo Fish Farm",loc:"Tombo",batch:"SL-FS-1031-001",stock:"340kg",price:"Le 85k/kg",gps:"8.03,-13.15",img:"https://images.unsplash.com/photo-1534766555764-ce878a5e3a2b?w=400",hash:"0x3f6a...",phone:"+23278XXXXX"},
+ {id:"AG-CATTLE-001",type:"livestock",tag:"LIVESTOCK",name:"Bo Cattle Ranch",loc:"Bo",batch:"SL-CT-1031-001",stock:"12 heads",price:"Le 8M/head",gps:"7.96,-11.74",img:"https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?w=400",hash:"0x5b9c...",phone:"+23278XXXXX"},
+ {id:"AG-RICE-001",type:"crop",tag:"CROP",name:"Bo Rice",loc:"Bo",batch:"SL-RC-1031-001",stock:"1.8T",price:"Le 4M/T",gps:"7.96,-11.74",img:"https://images.unsplash.com/photo-1536304929831-ee6625d00de8?w=400",hash:"0x7e2f...",phone:"+23278XXXXX"}
+];
+
+const AgriverseMarket={
+ filterType:'all',
+ search(q){
+  q=q.toLowerCase();
+  let f=farms.filter(x=>{
+   let match=(x.name.toLowerCase().includes(q)||x.loc.toLowerCase().includes(q)||x.tag.toLowerCase().includes(q)||x.id.toLowerCase().includes(q));
+   let typeMatch=this.filterType=='all'||x.type==this.filterType;
+   if(this.filterType=='nearby') typeMatch=x.loc.includes('Kossoh')||x.loc.includes('Newton'); // demo near Freetown
+   return match&&typeMatch;
+  });
+  this.render(f);
+ },
+ filter(t,el){
+  this.filterType=t;
+  document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  this.search(document.getElementById('q').value);
+ },
+ render(list){
+  document.getElementById('results').innerHTML=list.map(f=>`
+   <div class="card">
+    <img src="${f.img}">
+    <div class="p">
+     <div style="display:flex;justify-content:space-between"><b>${f.name}</b><span class="tag tag-${f.type}">${f.tag}</span></div>
+     <small>${f.loc} • ${f.gps} • ${f.batch}</small><br>
+     <small>Stock: <b>${f.stock}</b> • Price: <b>${f.price}</b></small>
+     <div style="font-family:monospace;font-size:9px;background:#e8f5e8;padding:4px;border-radius:4px;margin-top:6px">Hash: ${f.hash} • Sherbro Node 001 Verified</div>
+     <button class="buy" onclick="Agriverse.splitPayment(50000,'${f.phone}').then(r=>alert('Orange Money: Paid Le '+r.farmerShare+' to farmer '+f.name+'\\nVault: agriverse.africa/vault/'+f.batch))">🟠 Buy via Orange Money — 80% to Farmer</button>
+     <button class="buy" style="background:#fff;color:#0a4d1f;border:1px solid #0a4d1f" onclick="window.open('https://agriverse.africa/vault/'+f.batch,'_blank')">View Live Farm Passport + QR</button>
+    </div>
+   </div>
+  `).join('');
+ }
+};
+AgriverseMarket.render(farms);
+</script>
+</body>
+</html>
