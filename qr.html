@@ -1,0 +1,40 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QR Sticker — Every Farm Online</title>
+<link rel="stylesheet" href="style.css">
+<style>.wrap{max-width:600px;margin:16px auto;padding:16px}.sticker{background:#fff;border:2px dashed #0a4d1f;border-radius:12px;padding:16px;text-align:center;margin-top:12px} #qrcode{width:200px;height:200px;margin:10px auto;background:#eee;display:flex;align-items:center;justify-content:center;font-size:10px} @media print{.no-print{display:none} .sticker{border:2px solid #000}}</style>
+</head><body>
+<header><b>QR STICKER GENERATOR</b> — Layer 4 • Print for crates, sacks, fish boxes</header>
+<div class="wrap">
+<div class="card">
+Farm ID<br><select id="fid" style="width:100%;padding:10px;border-radius:8px">
+<option value="AG-CASSAVA-001">AG-CASSAVA-001 — Moyamba Cassava — 2.5T</option>
+<option value="AG-POULTRY-001">AG-POULTRY-001 — Sierra Akker Kossoh — 1,176 eggs</option>
+<option value="AG-FISH-001">AG-FISH-001 — Tombo Fish — 340kg</option>
+<option value="AG-RICE-001">AG-RICE-001 — Bo Rice — 1.8T</option>
+<option value="AG-CATTLE-001">AG-CATTLE-001 — Bo Cattle — 12 heads</option>
+</select><br><br>
+Batch<br><input id="batch" style="width:100%;padding:10px;border-radius:8px" value="SL-SA-1031-001"><br><br>
+<button class="btn btn-dark" style="width:100%" onclick="gen()">Generate QR Sticker</button>
+</div>
+
+<div id="out" class="sticker" style="display:none">
+<div style="font-size:10px;font-weight:800">AGRIVERSE OS • Sherbro Node 001 • VERIFIED</div>
+<h3 id="outName">Farm Name</h3>
+<div id="qrcode">QR CODE<br>agriverse.africa/vault/SL-SA-1031-001</div>
+<div style="font-size:11px"><b id="outId">AG-FARM-001</b> • <span id="outBatch">Batch</span><br>GPS: <span id="outGps">8.3821,-13.2122</span> • Hash: 0x7f2a... • Cannot Fake<br><small>Scan to see live farm • First time in Africa your farm digitally alive</small></div>
+<br><button class="btn btn-green no-print" onclick="window.print()">🖨️ Print Sticker (for crate/sack)</button>
+</div>
+</div>
+<script>
+function gen(){
+ let fid=document.getElementById('fid').value;
+ let batch=document.getElementById('batch').value;
+ document.getElementById('out').style.display='block';
+ document.getElementById('outId').innerText=fid;
+ document.getElementById('outBatch').innerText=batch;
+ document.getElementById('outName').innerText=document.getElementById('fid').options[document.getElementById('fid').selectedIndex].text;
+ document.getElementById('qrcode').innerHTML=`<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://velachecoker77-wq.github.io/Agriverse-Africa-/index.html%23${fid}" style="width:200px;height:200px">`;
+}
+</script>
+</body></html>
