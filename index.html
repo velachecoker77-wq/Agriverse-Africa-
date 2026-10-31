@@ -1,69 +1,111 @@
-<a href="auth.html" style="background:#22c55e;color:#000;padding:6px 12px;border-radius:8px;text-decoration:none;font-weight:800;margin-left:8px">Sign In</a>
-<!DOCTYPE html><html><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Agriverse OS — Every Farm Online</title>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agriverse Africa — Every Farm Online — Sherbro Node 001</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:system-ui;background:#f5faf5;color:#111}
-header{background:#0a4d1f;color:#fff;padding:14px 16px;position:sticky;top:0;z-index:10}
-a{color:inherit;text-decoration:none}
-.hero{padding:24px 16px;background:linear-gradient(135deg,#0a4d1f,#22c55e);color:#fff}
-.grid{display:grid;grid-template-columns:1fr;gap:12px;padding:16px}
-@media(min-width:700px){.grid{grid-template-columns:1fr 1fr}}
-.card{background:#fff;border-radius:16px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,.08)}
-.btn{display:inline-block;padding:12px 14px;border-radius:10px;font-weight:800;margin-top:8px;border:none;width:100%;text-align:center}
-.btn-dark{background:#0a4d1f;color:#fff}
-.btn-green{background:#22c55e;color:#000}
-.btn-blue{background:#0ea5e9;color:#fff}
-.badge{display:inline-block;padding:4px 8px;border-radius:20px;background:#e8f5e8;font-size:11px;font-weight:800;margin-right:4px}
+header{background:#0a4d1f;color:#fff;padding:14px;position:sticky;top:0;z-index:99;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+header a{color:#fff;text-decoration:none;font-weight:800;margin-left:10px}
+.logo{font-size:18px;font-weight:900;letter-spacing:.5px}
+.btn-green{background:#22c55e;color:#000 !important;padding:8px 14px;border-radius:10px;text-decoration:none;font-weight:900}
+.btn-dark{background:#fff;color:#0a4d1f !important;padding:8px 14px;border-radius:10px;text-decoration:none;font-weight:900;border:2px solid #0a4d1f}
+.wrap{max-width:900px;margin:0 auto;padding:14px}
+.hero{background:linear-gradient(135deg,#0a4d1f 0%,#16a34a 100%);color:#fff;border-radius:20px;padding:22px;margin:14px 0}
+.badge-pill{background:#000;color:#fff;border:1px solid #22c55e;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:800;display:inline-block;margin:4px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.card{background:#fff;border-radius:16px;padding:18px;margin:12px 0;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+h2{font-size:18px;margin-bottom:6px}
+h3{font-size:15px;margin-bottom:6px}
+.small{font-size:11px;color:#555}
+table{width:100%;font-size:13px;border-collapse:collapse} td{padding:8px;border-bottom:1px solid #eee}
+button{padding:12px;border-radius:10px;border:none;font-weight:800;cursor:pointer;width:100%;margin:6px 0}
 </style>
-</head><body>
-<header><b>AGRIVERSE OS</b> | Sherbro Node 001 • LIVE • 100% LOCAL • ZERO IMPORT 2029</header>
+</head>
+<body>
+<header>
+<div class="logo">AGRIVERSE AFRICA — Every Farm Online</div>
+<div>
+<a href="auth.html" class="btn-green">Sign In</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="vault.html">Vault</a>
+<a href="qr.html">QR</a>
+</div>
+</header>
 
+<div class="wrap">
 <div class="hero">
-<h1>Every Farm Online</h1>
-<p style="margin-top:8px;font-size:15px">First time in Africa your farm is digitally alive. IoT + Data Vault for Crops, Livestock & Fisheries.</p>
-<p style="margin-top:8px"><span class="badge">12 Farms Live</span><span class="badge">Sherbro Node 001</span><span class="badge">Orange Money 80%</span></p>
+<h1 style="font-size:22px;line-height:1.2">First time in Africa your farm is digitally alive. IoT + Data Sovereignty + 80% to Farmer.</h1>
+<div style="margin:12px 0">
+<span class="badge-pill">✅ 12 Farms Live</span>
+<span class="badge-pill">📡 Sherbro Node 001</span>
+<span class="badge-pill">💰 Orange Money 80%</span>
+</div>
+<p class="small" style="color:#dcfce7">General service — poultry, cassava, rice, fish, goat — same table — data stays in Salone — hash cannot fake — Data Sovereignty Act 2023</p>
+<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+<a href="auth.html" class="btn-green">Create Account Key — AG-</a>
+<a href="qr.html" class="btn-dark">Generate QR — Copy & Cut</a>
+</div>
 </div>
 
 <div class="grid">
 <div class="card">
-<b>🛰️ 1. Farm Passport (Vault)</b><br><small>View single farm QR, GPS, hash, batch</small><br>
-<a href="index.html#AG-POULTRY-001" class="btn btn-dark">Open Passport Sample</a>
-<div style="margin-top:8px;font-size:12px">ID: AG-POULTRY-001 • Sierra Akker • Kossoh Town • GPS 8.3821,-13.2122 • Batch SL-SA-1031-001 • Hash 0x7f2a... • Sherbro Node 001 Verified</div>
+<h3>🧾 1. Farm Passport (Vault)</h3>
+<p class="small">Scan QR on crate/sack → vault.html?batch=SL-KO-1101-001 — photo, GPS, hash, verification</p>
+<table>
+<tr><td>Batch ID</td><td><b>SL-KO-1101-001</b></td></tr>
+<tr><td>Farm ID</td><td>AG-POULTRY-001</td></tr>
+<tr><td>GPS</td><td>8.3821,-13.2122 Kossoh</td></tr>
+<tr><td>Hash</td><td>0x7f2ae...cannot fake</td></tr>
+</table>
+<a href="vault.html?batch=SL-KO-1101-001" style="display:block;background:#0a4d1f;color:#fff;text-align:center;padding:10px;border-radius:10px;text-decoration:none;font-weight:800;margin-top:10px">Open Vault Demo</a>
 </div>
 
 <div class="card">
-<b>📊 2. Dashboard</b><br><small>You control price, buyers, QR — no import</small><br>
-<a href="dashboard.html" class="btn btn-green">Open Dashboard</a>
-<div style="margin-top:8px;font-size:12px">QR Scans 847 • Loss 3.2% • Farms 12 • Earnings Le 48.5M</div>
+<h3>💰 2. Wallet — 80% Farmer</h3>
+<p class="small">Every sale — farmer get 80% → Orange Money linked to AG- key</p>
+<table>
+<tr><td>Sale</td><td>Le 520,000</td></tr>
+<tr><td>Farmer 80%</td><td><b>Le 416,000</b></td></tr>
+<tr><td>Agriverse 15%</td><td>Le 78,000</td></tr>
+<tr><td>Node 5%</td><td>Le 26,000</td></tr>
+</table>
+<a href="auth.html" style="display:block;background:#fff;border:1px solid #0a4d1f;color:#0a4d1f;text-align:center;padding:10px;border-radius:10px;text-decoration:none;font-weight:800;margin-top:10px">Link Wallet to AG- Key</a>
 </div>
 
 <div class="card">
-<b>📤 3. Upload</b><br><small>WhatsApp GPS + 3 Photos → Live in 60s, offline ready</small><br>
-<a href="upload.html" class="btn btn-blue">Open Upload</a>
+<h3>📷 3. IoT + General Pilot Table</h3>
+<p class="small">12 farms — 1 table — poultry eggs, cassava, fish, goat — photo + damage + GPS + hash</p>
+<table>
+<tr><td>AG-POULTRY-001</td><td>1,176 eggs</td></tr>
+<tr><td>AG-CASSAVA-001</td><td>2.5T cassava</td></tr>
+<tr><td>AG-FISH-001</td><td>340kg Tombo</td></tr>
+<tr><td>AG-GOAT-001</td><td>35 heads Moyamba</td></tr>
+</table>
+<a href="dashboard.html" style="display:block;background:#0a4d1f;color:#fff;text-align:center;padding:10px;border-radius:10px;text-decoration:none;font-weight:800;margin-top:10px">Open Dashboard</a>
 </div>
 
 <div class="card">
-<b>🛒 4. Marketplace Layer 2</b><br><small>Search every farm, Orange Money buy 80% to farmer</small><br>
-<a href="marketplace.html" class="btn btn-dark">Open Marketplace</a>
-<div style="margin-top:8px;font-size:12px">Try: fish Tombo, cassava Moyamba, poultry Kossoh, rice Bo</div>
+<h3>🔗 4. QR Sticker — Copy & Cut</h3>
+<p class="small">Generate QR → Print → Cut dotted line → Stick on crate/sack/box — scan open vault</p>
+<div style="background:#f0fdf4;padding:10px;border-radius:10px;font-size:12px;word-break:break-all;margin:8px 0">
+www.agriverseafrica.com/vault.html?batch=SL-KO-1101-001<br>
+Hash cannot fake — Sherbro Node 001
 </div>
-
-<div class="card">
-<b>🗺️ 5. Map Layer 3</b><br><small>12 GPS pins — Moyamba, Bo, Kenema, Port Loko, Kossoh, Newton, Tombo, Bonthe</small><br>
-<a href="map.html" class="btn btn-green">Open Farm Map</a>
-</div>
-
-<div class="card">
-<b>💰 6. Wallet Layer 3</b><br><small>Data Dividend Wallet — farmer earns while sleeping</small><br>
-<a href="wallet.html" class="btn btn-blue">Open Wallet</a>
-<div style="margin-top:8px;font-size:12px">Balance Le 38.8M • 80% auto-split • Orange Money</div>
+<a href="qr.html" style="display:block;background:#22c55e;color:#000;text-align:center;padding:10px;border-radius:10px;text-decoration:none;font-weight:900;margin-top:10px">Generate QR Full Code</a>
 </div>
 </div>
 
-<div style="padding:16px;text-align:center;font-size:12px;opacity:.7">
-Built from Freetown • Data stays in Salone • Data Sovereignty Act 2023 • If it is to be, it is up to us<br>
-<a href="https://github.com/velachecoker77-wq/Agriverse-Africa-" style="text-decoration:underline">GitHub Source</a> • www.agriverseafrica.com
+<div class="card" style="background:#0a4d1f;color:#fff">
+<b>If it is to be, it is up to us — Sierra Leone Owns Its Food Data</b><br>
+<small style="color:#bbf7d0">No foreign cloud — Sherbro Node 001 Freetown — Orange Money 80% — Every Farm Online — Farm Passport Vault verified</small><br><br>
+<a href="auth.html" class="btn-green" style="display:inline-block">Sign Up — Get AG- Key</a>
 </div>
-</body></html>
+
+</div>
+<script src="account.js"></script>
+</body>
+</html>
