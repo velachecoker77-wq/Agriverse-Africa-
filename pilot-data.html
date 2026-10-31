@@ -1,0 +1,38 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pilot Data — 2 Poultry — Every Farm Online</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box} body{font-family:system-ui;background:#f5faf5}
+header{background:#0a4d1f;color:#fff;padding:12px}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:11px}
+th,td{padding:8px;border:1px solid #ddd;text-align:left}
+th{background:#0a4d1f;color:#fff;position:sticky;top:0}
+.wrap{padding:12px;overflow:auto}
+.btn{padding:10px 14px;border-radius:8px;background:#0a4d1f;color:#fff;border:none;font-weight:800}
+</style>
+</head><body>
+<header><b>PILOT DATA</b> — 2 Poultry — AG-POULTRY-001 Sierra Akker Kossoh 8.3821,-13.2122 + AG-POULTRY-002 Newton 8.312,-13.092 • Sherbro Node 001 • <a href="index.html" style="color:#22c55e">Home</a></header>
+<div class="wrap">
+<button class="btn" onclick="location.href='pilot-data.csv'">Download CSV (for Excel)</button>
+<button class="btn" style="background:#22c55e;color:#000" onclick="location.href='map.html'">View Map Pins</button>
+<table id="tbl">
+<tr><th>farm_id</th><th>farm_name</th><th>date</th><th>eggs_collected</th><th>eggs_damaged</th><th>feed_kg</th><th>mortality</th><th>temp_C</th><th>humidity</th><th>batch_id</th><th>gps</th><th>location</th><th>hash</th><th>qr_link</th></tr>
+<tr><td>AG-POULTRY-001</td><td>Sierra Akker</td><td>2026-11-01</td><td>1040</td><td>12</td><td>120</td><td>2</td><td>28.5</td><td>65</td><td>SL-SA-1101-001</td><td>8.3821,-13.2122</td><td>Kossoh Town</td><td>0x7f2a0e0f3</td><td>agriverseafrica.com/vault/SL-SA-1101-001</td></tr>
+<tr><td>AG-POULTRY-002</td><td>Newton Poultry</td><td>2026-11-01</td><td>18000</td><td>12</td><td>850</td><td>2</td><td>28.5</td><td>65</td><td>SL-SA-1101-001</td><td>8.312,-13.092</td><td>Newton</td><td>0x7f2a0e0f3</td><td>agriverseafrica.com/vault/SL-SA-1101-001</td></tr>
+<tr><td>AG-POULTRY-001</td><td>Sierra Akker</td><td>2026-11-02</td><td>1042</td><td>13</td><td>120</td><td>0</td><td>28.7</td><td>66</td><td>SL-SA-1102-002</td><td>8.3821,-13.2122</td><td>Kossoh Town</td><td>0x7f2a1e0f3</td><td>agriverseafrica.com/vault/SL-SA-1102-002</td></tr>
+<tr><td>AG-POULTRY-002</td><td>Newton Poultry</td><td>2026-11-02</td><td>18100</td><td>13</td><td>850</td><td>0</td><td>28.7</td><td>66</td><td>SL-SA-1102-002</td><td>8.312,-13.092</td><td>Newton</td><td>0x7f2a1e0f3</td><td>agriverseafrica.com/vault/SL-SA-1102-002</td></tr>
+<tr><td>AG-POULTRY-001</td><td>Sierra Akker</td><td>2026-11-03</td><td>1044</td><td>14</td><td>120</td><td>0</td><td>28.9</td><td>67</td><td>SL-SA-1103-003</td><td>8.3821,-13.2122</td><td>Kossoh Town</td><td>0x7f2a2e0f3</td><td>agriverseafrica.com/vault/SL-SA-1103-003</td></tr>
+<tr><td>AG-POULTRY-002</td><td>Newton Poultry</td><td>2026-11-03</td><td>18200</td><td>14</td><td>850</td><td>0</td><td>28.9</td><td>67</td><td>SL-SA-1103-003</td><td>8.312,-13.092</td><td>Newton</td><td>0x7f2a2e0f3</td><td>agriverseafrica.com/vault/SL-SA-1103-003</td></tr>
+</table>
+<br><div style="background:#fff;padding:12px;border-radius:10px;font-size:12px">
+<b>What you go do Monday 9am Kossoh + Newton:</b><br>
+1. Open this page on phone<br>
+2. Ask farmer: how many eggs today? feed kg? any dead? — fill blank template<br>
+3. Take 2 photos per farm + WhatsApp GPS<br>
+4. Generate batch SL-SA-1103-003 → hash auto → QR sticker print<br>
+5. Show farmer wallet: "You don earn Le 40k today for data unlock"<br>
+<br><b>Excel columns you need:</b> farm_id, farm_name, date, eggs_collected, eggs_damaged, feed_kg, mortality, temp_C, humidity, batch_id, gps_lat, gps_lng, location, sha256_hash, qr_link<br>
+All inside Agriverse = AgriStack + Farm Doc + PoultryCore + Blockchain + IoT + Drone-ready + Excel — all in 13 files you get.
+</div>
+</div>
+</body></html>
