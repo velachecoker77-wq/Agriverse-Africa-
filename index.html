@@ -1,29 +1,96 @@
-<!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Agriverse Africa</title>
-<style>body{margin:0;background:#000;color:#fff;font-family:sans-serif}
-header{padding:12px 16px;background:#0a1a0f;display:flex;justify-content:space-between;border-bottom:1px solid #1e3a24}
-a.btn{padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:800;font-size:13px}
-.lime{background:#7CFF6B;color:#000}.dark{background:#111;color:#7CFF6B;border:1px solid #1e3a24}
-.hero{margin:16px;padding:20px;background:#0a2a12;border-radius:20px;border:1px solid #1e3a24}
-.grid{padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agriverse Africa — Every Farm Online</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f6f8f6;color:#0a1f11;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{position:sticky;top:0;z-index:10;background:#0a1f11;color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #7CFF6B}
+header b{font-size:11px;letter-spacing:.5px}
+.nav a{font-size:10px;padding:6px 10px;border-radius:999px;text-decoration:none;font-weight:800;margin-left:4px}
+.n1{background:#7CFF6B;color:#000}.n2{color:#fff;opacity:.8}
+.wrap{max-width:900px;margin:0 auto;padding:10px}
+.hero{background:#0e3d1a;color:#fff;border-radius:16px;padding:16px;margin:10px 0;border:2px solid #1a5a27}
+.hero h2{font-size:16px;line-height:1.25} .hero h2 span{color:#7CFF6B}
+.badges{display:flex;gap:6px;margin:10px 0;flex-wrap:wrap}
+.badges span{font-size:9px;background:#000;border:1px solid #2a6a35;padding:4px 8px;border-radius:999px}
+.hero small{display:block;font-size:9px;opacity:.6;margin:6px 0;line-height:1.3}
+.btnrow{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.bt{flex:1;min-width:140px;text-align:center;padding:10px;border-radius:999px;font-weight:900;font-size:11px;text-decoration:none;border:none;cursor:pointer}
+.bt-green{background:#7CFF6B;color:#000}.bt-dark{background:#000;color:#7CFF6B;border:1px solid #2a6a35}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
 @media(max-width:700px){.grid{grid-template-columns:1fr}}
-.card{background:#0e1a11;border:1px solid #1e3a24;border-radius:16px;padding:14px}
-.big{display:flex;gap:10px;padding:16px}.big a{flex:1;text-align:center;padding:14px;border-radius:12px;font-weight:900;text-decoration:none}
-</style></head><body>
-<header><b style="color:#7CFF6B">AGRIVERSE AFRICA</b><div><a class="btn lime" href="auth.html">Sign In</a> <a class="btn dark" href="dashboard.html">Dashboard</a></div></header>
+.card{background:#fff;border:1px solid #d8e5d8;border-radius:12px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card h4{font-size:11px;color:#0e3d1a;display:flex;align-items:center;gap:6px}
+.card h4::before{content:'';width:14px;height:14px;background:#e8f5e9;border-radius:3px;display:inline-block}
+.card p{font-size:9px;opacity:.6;margin:4px 0 8px}
+.row{display:flex;justify-content:space-between;font-size:10px;padding:4px 0;border-bottom:1px dashed #e6efe6}
+.row b{font-size:10px}
+.card-btn{width:100%;margin-top:8px;padding:10px;border-radius:8px;border:none;font-weight:900;font-size:11px;cursor:pointer}
+.c-green{background:#0e3d1a;color:#7CFF6B}.c-light{background:#e8f5e9;color:#0e3d1a;border:1px solid #cde9d0}
+.c-green-bright{background:#7CFF6B;color:#000}
+.qrbox{background:#e8f5e9;padding:8px;border-radius:8px;font-size:9px;margin:6px 0;word-break:break-all;line-height:1.4}
+.footer{background:#0e3d1a;color:#fff;border-radius:16px;padding:14px;margin:12px 0 30px;border:2px solid #1a5a27}
+.footer h4{font-size:12px;line-height:1.3}
+.footer p{font-size:9px;opacity:.7;margin:6px 0}
+</style>
+</head>
+<body>
+<header><b>AGRIVERSE AFRICA — Every Farm Online</b><div class="nav"><a class="n1" href="auth.html">Sign In</a><a class="n2" href="dashboard.html">Dashboard</a><a class="n2" href="vault.html">Vault</a><a class="n2" href="qr.html">QR</a></div></header>
+<div class="wrap">
 <div class="hero">
-<h2>Every Farm Online. <span style="color:#7CFF6B">IoT + Data Sovereignty + 80% to Farmer.</span></h2>
-<div class="big">
-<a href="agristack.html" style="background:#7CFF6B;color:#000">Agristack</a>
-<a href="cropcore.html" style="background:#ffcc00;color:#000">Cropcore</a>
-<a href="farmdoctor.html" style="background:#5ecbff;color:#000">Farm Doctor</a>
+<h2>First time in Africa your farm is digitally alive. <span>IoT + Data Sovereignty + 80% to Farmer.</span></h2>
+<div class="badges"><span>🔥 12 Farms Live</span><span>📡 Sherbro Node 001</span><span>🟠 Orange Money 80%</span></div>
+<small>Generic service — poultry, cassava, rice, fish, goat — same taste — data stays in Salone — hash cannot fake — Data Sovereignty Act 2023</small>
+<div class="btnrow"><a class="bt bt-green" href="auth.html">Create Account Key — AG-</a><a class="bt bt-dark" href="qr.html">Generate QR — Copy & Cut</a></div>
 </div>
-</div>
+
 <div class="grid">
-<div class="card"><h4 style="color:#7CFF6B">Farm Passport</h4><p>Vault + Hash + GPS</p><a class="btn dark" href="vault.html" style="display:block;text-align:center">Open Vault</a></div>
-<div class="card"><h4 style="color:#7CFF6B">Wallet 80%</h4><p>Orange Money + 80% to farmer</p><a class="btn dark" href="wallet.html" style="display:block;text-align:center">Wallet</a></div>
-<div class="card"><h4 style="color:#7CFF6B">IoT Table</h4><p>Poultry, cassava, fish, goat</p><a class="btn dark" href="dashboard.html" style="display:block;text-align:center">Dashboard</a></div>
-<div class="card"><h4 style="color:#7CFF6B">QR Sticker</h4><p>Copy & Cut</p><a class="btn lime" href="qr.html" style="display:block;text-align:center">Generate QR</a></div>
+<div class="card">
+<h4>1. Farm Passport (Vault)</h4>
+<p>Scan QR on crate/box → vault.html?batch=SL-KO-1101-001-001 → photo, GPS, hash, verification</p>
+<div class="row"><span>Batch ID</span><b>SL-KO-1101-001</b></div>
+<div class="row"><span>Farm ID</span><b>AG-POULTRY-001</b></div>
+<div class="row"><span>GPS</span><b>8.3821, 12.2122 Kossah</b></div>
+<div class="row"><span>Hash</span><b>0x7f2ac...cannot fake</b></div>
+<button class="card-btn c-green" onclick="location.href='vault.html'">Open Vault Demo</button>
 </div>
-</body></html>
+
+<div class="card">
+<h4>2. Wallet — 80% Farmer</h4>
+<p>Every sale — farmer get 80% — Orange Money linked to AG- key</p>
+<div class="row"><span>Sale</span><b>Le 520,000</b></div>
+<div class="row"><span>Farmer 80%</span><b>Le 416,000</b></div>
+<div class="row"><span>Agriverse 15%</span><b>Le 78,000</b></div>
+<div class="row"><span>Node 5%</span><b>Le 26,000</b></div>
+<button class="card-btn c-light" onclick="location.href='wallet.html'">Link Wallet to AG- Key</button>
+</div>
+
+<div class="card">
+<h4>3. IoT + General Pilot Table</h4>
+<p>12 items — 1 table — poultry eggs, cassava, fish, goat — photo + damage + GPS — 1 table</p>
+<div class="row"><span>AG-POULTRY-001</span><span>1,176 eggs</span></div>
+<div class="row"><span>AG-CASSAVA-001</span><span>2.5T cassava</span></div>
+<div class="row"><span>AG-FISH-001</span><span>340kg Tombo</span></div>
+<div class="row"><span>AG-GOAT-001</span><span>35 heads Moyamba</span></div>
+<button class="card-btn c-green" onclick="location.href='dashboard.html'">Open Dashboard</button>
+</div>
+
+<div class="card">
+<h4>4. QR Sticker — Copy & Cut</h4>
+<p>Generate QR → Print → Cut dotted line → Stick on crate/box/bag → scan open vault</p>
+<div class="qrbox">www.agriverseafrica.com/vault.html?batch=SL-1101-001<br>Hash cannot fake — Sherbro Node 001<br>Farmer verified</div>
+<button class="card-btn c-green-bright" onclick="location.href='qr.html'">Generate QR Full Code</button>
+</div>
+</div>
+
+<div class="footer">
+<h4>If it is to be, it is up to us — Sierra Leone Owns Its Food Data</h4>
+<p>No foreign cloud — Sherbro Node 001 Freetown — Orange Money 80% — Every Farm Online — Farm Passport Vault verified — Data Sovereignty</p>
+<a class="bt bt-green" style="display:inline-block;padding:8px 14px;font-size:11px;text-decoration:none" href="auth.html">Sign Up — Get AG- Key</a>
+</div>
+</div>
+</body>
+</html>
