@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cropcore - Agriverse</title>
+<style>body{margin:0;background:#000;color:#fff;font-family:system-ui} header{padding:14px;background:#0a1f11;border-bottom:1px solid #1e3a24;display:flex;justify-content:space-between} a{color:#7CFF6B;text-decoration:none;font-weight:800}
+.wrap{padding:16px} .card{background:#0e1a11;border:1px solid #1e3a24;border-radius:14px;padding:14px;margin:12px 0}
+.btn{background:#ffcc00;color:#000;padding:12px;border-radius:10px;border:none;font-weight:900;width:100%}
+input{width:100%;padding:10px;margin:6px 0;background:#000;color:#fff;border:1px solid #1e3a24;border-radius:8px}
+table{width:100%;border-collapse:collapse;font-size:12px} th{color:#7CFF6B;text-align:left;border-bottom:1px solid #1e3a24;padding:6px} td{padding:6px;border-bottom:1px dashed #1a2e1f}
+</style></head><body>
+<header><b style="color:#ffcc00">CROPCORE</b><a href="index.html">← Home</a></header>
+<div class="wrap">
+<div class="card"><h3>🌱 General Pilot Table — 1 Table All Crops</h3>
+<table><thead><tr><th>ID</th><th>Crop</th><th>Qty</th><th>Damage</th><th>GPS</th></tr></thead><tbody id="tbody"></tbody></table>
+</div>
+<div class="card"><h3>Add Crop + Photo</h3>
+<input id="cid" placeholder="AG-CASSAVA-001">
+<input id="qty" placeholder="2.5T or 1176 eggs">
+<input id="dam" placeholder="Damage % e.g 2%">
+<input id="gps2" placeholder="GPS">
+<input type="file" id="photo" accept="image/*">
+<button class="btn" onclick="add()">Add to Core</button>
+</div>
+</div>
+<script>
+let data=JSON.parse(localStorage.getItem('cropcore')||'[]');
+function render(){document.getElementById('tbody').innerHTML=data.map(d=>`<tr><td>${d.id}</td><td>${d.id.split('-')[1]}</td><td>${d.qty}</td><td>${d.dam}</td><td>${d.gps}</td></tr>`).join('')||'<tr><td colspan=5>No data</td></tr>';}
+function add(){let obj={id:document.getElementById('cid').value,qty:document.getElementById('qty').value,dam:document.getElementById('dam').value,gps:document.getElementById('gps2').value}; if(!obj.id)return alert('Put ID'); data.push(obj); localStorage.setItem('cropcore',JSON.stringify(data)); render();}
+render();
+</script>
+</body></html>
