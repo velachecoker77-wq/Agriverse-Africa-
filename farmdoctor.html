@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Farm Doctor - Agriverse</title>
+<style>body{margin:0;background:#000;color:#fff;font-family:system-ui} header{padding:14px;background:#0a1f11;border-bottom:1px solid #1e3a24;display:flex;justify-content:space-between} a{color:#7CFF6B;text-decoration:none;font-weight:800}
+.wrap{padding:16px} .card{background:#0e1a11;border:1px solid #1e3a24;border-radius:14px;padding:14px;margin:12px 0}
+.btn{background:#5ecbff;color:#000;padding:14px;border-radius:10px;border:none;font-weight:900;width:100%}
+#preview{width:100%;max-height:300px;object-fit:cover;border-radius:12px;display:none;margin-top:10px;border:1px solid #1e3a24}
+</style></head><body>
+<header><b style="color:#5ecbff">FARM DOCTOR 🩺</b><a href="index.html">← Home</a></header>
+<div class="wrap">
+<div class="card"><h3>Upload sick crop / chicken / fish photo</h3>
+<input type="file" id="file" accept="image/*" onchange="show(event)">
+<img id="preview">
+<button class="btn" onclick="diagnose()">Diagnose with AI</button>
+<div id="result" style="margin-top:12px;background:#000;padding:12px;border-radius:10px;border:1px dashed #1e3a24;display:none"></div>
+</div>
+<div class="card"><small style="opacity:.6">Demo AI: No internet needed. In production we go connect to OpenAI / Plant.id API. For now na rule-based.</small></div>
+</div>
+<script>
+function show(e){let f=e.target.files[0]; if(!f)return; let img=document.getElementById('preview'); img.src=URL.createObjectURL(f); img.style.display='block';}
+function diagnose(){let res=document.getElementById('result'); res.style.display='block'; res.innerHTML='Analyzing... <br> Checking leaf spots, feather loss, water...'; setTimeout(()=>{res.innerHTML=`<b style="color:#7CFF6B">Diagnosis: Possible Cassava Mosaic / Newcastle (demo)</b><br><br>
+<b>Symptoms:</b> Yellow spots, stunted<br>
+<b>Action:</b> Isolate batch, spray neem, report to Sherbro Node 001<br>
+<b>GPS Tag:</b> 8.3821, -12.2122<br>
+<b>Hash:</b> 0x7f2ac...cannot fake<br><br>
+<button onclick="save()" style="background:#7CFF6B;color:#000;padding:8px 12px;border-radius:8px;border:none;font-weight:800">Save to Vault</button>`;},1500);}
+function save(){alert('Saved to Vault! (local demo)');}
+</script>
+</body></html>
