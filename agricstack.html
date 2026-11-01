@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agristack - Agriverse</title>
+<style>body{margin:0;background:#000;color:#fff;font-family:system-ui} header{padding:14px;background:#0a1f11;border-bottom:1px solid #1e3a24;display:flex;justify-content:space-between} a{color:#7CFF6B;text-decoration:none;font-weight:800}
+.wrap{padding:16px} .card{background:#0e1a11;border:1px solid #1e3a24;border-radius:14px;padding:14px;margin:12px 0}
+.btn{background:#7CFF6B;color:#000;padding:12px;border-radius:10px;border:none;font-weight:900;width:100%}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px} @media(max-width:700px){.grid{grid-template-columns:1fr}}
+input,select{width:100%;padding:10px;margin:6px 0;background:#000;color:#fff;border:1px solid #1e3a24;border-radius:8px}
+</style></head><body>
+<header><b style="color:#7CFF6B">AGRISTACK</b><a href="index.html">← Home</a></header>
+<div class="wrap">
+<div class="card"><h3>🌾 Live Nodes</h3><div class="grid"><div class="card">Sherbro Node 001<br><small>8.3821, -12.2122 — ONLINE</small><br><b style="color:#7CFF6B">12 Farms</b></div><div class="card">Moyamba Node 002<br><small>8.1, -12.4 — ONLINE</small><br><b style="color:#ffcc00">8 Farms</b></div></div></div>
+
+<div class="card"><h3>Add Farm to Stack</h3>
+<input id="farmId" placeholder="Farm ID e.g AG-POULTRY-001">
+<select id="type"><option>Poultry</option><option>Cassava</option><option>Rice</option><option>Fish</option><option>Goat</option></select>
+<input id="gps" placeholder="GPS 8.3821, -12.2122">
+<button class="btn" onclick="addFarm()">Add to Stack + Save to Supabase</button>
+<p id="msg" style="font-size:12px;margin-top:8px;opacity:.7"></p>
+</div>
+
+<div class="card"><h3>Stack Table (from /api/farmers)</h3><div id="list">Loading...</div></div>
+</div>
+<script>
+async function load(){try{let r=await fetch('/api/farmers');let j=await r.json(); document.getElementById('list').innerHTML=j.length?j.map(f=>`<div style="border-bottom:1px dashed #1e3a24;padding:6px 0;display:flex;justify-content:space-between"><span>${f.farm_id||f.id} — ${f.type||''}</span><span style="color:#7CFF6B">${f.gps||''}</span></div>`).join(''):'No farms yet';}catch(e){document.getElementById('list').innerHTML='Error: /api/farmers not live. Check Vercel Env Vars';}}
+async function addFarm(){let body={farm_id:document.getElementById('farmId').value,type:document.getElementById('type').value,gps:document.getElementById('gps').value,node:'Sherbro 001'}; document.getElementById('msg').innerText='Saving...'; try{let r=await fetch('/api/farmers',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}); let j=await r.json(); document.getElementById('msg').innerText=j.error? 'Error: '+j.error : 'Saved! '+j.farm_id; load();}catch(e){document.getElementById('msg').innerText='Network Error - check /api/farmers';}}
+load();
+</script>
+</body></html>
