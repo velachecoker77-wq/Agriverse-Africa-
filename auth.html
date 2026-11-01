@@ -1,114 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Agriverse Auth — Sign In Sign Up</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agriverse - Farmer Auth</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:system-ui;background:#f5faf5}
-header{background:#0a4d1f;color:#fff;padding:14px}
-.wrap{max-width:420px;margin:24px auto;padding:14px}
-.card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
-input{width:100%;padding:13px;border-radius:10px;border:1px solid #ddd;margin:8px 0;font-size:14px}
-button{width:100%;padding:13px;border-radius:10px;border:none;font-weight:800;cursor:pointer;margin:6px 0;font-size:14px}
-.btn-green{background:#0a4d1f;color:#fff}
-.btn-light{background:#e8f5e8;color:#0a4d1f}
-.keybox{background:#f0fdf4;border:2px dashed #0a4d1f;padding:12px;border-radius:10px;margin:12px 0;word-break:break-all;display:none}
+body{font-family:Arial;background:#0a1f0a;color:white;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0}
+.card{background:#122912;padding:30px;border-radius:16px;width:90%;max-width:400px;border:1px solid #2a5a2a}
+h1{color:#7CFC00;text-align:center}
+input{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:none;box-sizing:border-box}
+button{width:100%;padding:14px;background:#7CFC00;color:#000;font-weight:bold;border:none;border-radius:10px;margin-top:15px;cursor:pointer;font-size:16px}
+button:active{transform:scale(0.98)}
+.note{font-size:12px;text-align:center;margin-top:10px;opacity:0.7}
 </style>
 </head>
 <body>
-<header><b>AGRIVERSE AUTH</b> — Sign In / Sign Up — <a href="index.html" style="color:#22c55e">Home</a></header>
-<div class="wrap">
 <div class="card">
-<h3 id="title">Sign Up</h3>
-<p style="font-size:11px;color:#666;margin:6px 0">General — farmer, buyer, all farms — one key</p>
-<input id="name" placeholder="Full Name">
-<input id="phone" placeholder="Phone +232... Orange Money">
-<input id="farm" placeholder="Farm ID e.g. AG-POULTRY-001">
-<input id="password" type="password" placeholder="Password min 6">
-<div class="keybox" id="keybox">
-<b>🔑 YOUR ACCOUNT KEY — SAVE IT</b><br><br>
-<div id="accountKey" style="font-weight:800"></div><br>
-<button class="btn-light" onclick="copyKey()">Copy Key</button>
+<h1>🌾 Agriverse Africa</h1>
+<h3 style="text-align:center">Register Farmer</h3>
+<input id="fullName" placeholder="Full Name - e.g. Aminata Sesay">
+<input id="phone" placeholder="Phone - e.g. 076123456">
+<input id="village" placeholder="Village - e.g. Shenbro">
+<button onclick="registerFarmer()">REGISTER & GET AG KEY</button>
+<p class="note" id="status">Bole Notebook - Real Database Live</p>
+<hr style="margin:20px 0;opacity:0.2">
+<h3 style="text-align:center">Already get AG Key?</h3>
+<input id="agKeyLogin" placeholder="Enter AG Key - e.g. AG-123">
+<button onclick="loginFarmer()" style="background:white">LOGIN</button>
 </div>
-<button class="btn-green" id="btn" onclick="signUp()">Create Account + Generate Key</button>
-<button class="btn-light" onclick="toggle()">Already have account? Sign In</button>
-<div id="msg" style="margin-top:12px;font-size:12px"></div>
-</div>
-</div>
+
 <script>
-let mode='up';
-let currentKey='';
-function toggle(){
-if(mode==='up'){
-mode='in';
-document.getElementById('title').innerText='Sign In';
-document.getElementById('btn').innerText='Sign In';
-document.getElementById('btn').setAttribute('onclick','signIn()');
-document.getElementById('name').style.display='none';
-document.getElementById('farm').style.display='none';
-document.getElementById('keybox').style.display='none';
-}else{
-mode='up';
-document.getElementById('title').innerText='Sign Up';
-document.getElementById('btn').innerText='Create Account + Generate Key';
-document.getElementById('btn').setAttribute('onclick','signUp()');
-document.getElementById('name').style.display='block';
-document.getElementById('farm').style.display='block';
+async function registerFarmer(){
+  const fullName = document.getElementById('fullName').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const village = document.getElementById('village').value.trim();
+  const status = document.getElementById('status');
+  
+  if(!fullName || !phone || !village){
+    alert("Fill all fields!");
+    return;
+  }
+
+  status.innerText = "Saving to Bole Notebook...";
+  const ag_key = "AG-" + Date.now();
+
+  try {
+    const res = await fetch('/api/farmers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ag_key, full_name: fullName, phone, village })
+    });
+    const data = await res.json();
+    
+    if(data.success){
+      localStorage.setItem('ag_key', ag_key);
+      localStorage.setItem('farmer_name', fullName);
+      status.innerText = "✅ Saved! AG Key: " + ag_key;
+      alert("SUCCESS!\n\nName: " + fullName + "\nAG Key: " + ag_key + "\n\nE don save for real database!");
+      window.location.href = "/dashboard.html";
+    } else {
+      status.innerText = "❌ Error: " + (data.error || "Failed");
+      alert("Error: " + JSON.stringify(data));
+    }
+  } catch(err){
+    status.innerText = "❌ Network Error";
+    alert("Fetch error - check if /api/farmers live: " + err.message);
+  }
 }
-}
-function genKey(phone,farm){
-let base=phone+'|'+farm+'|'+Date.now()+'|'+Math.random()+'|Sherbro-Node-001';
-let hash=0;
-for(let i=0;i<base.length;i++){hash=((hash<<5)-hash)+base.charCodeAt(i);hash=hash&hash;}
-return 'AG-'+Math.abs(hash).toString(16).toUpperCase()+'-'+btoa(phone).slice(0,6).toUpperCase()+'-'+Date.now().toString(16).toUpperCase().slice(-6);
-}
-function signUp(){
-let name=document.getElementById('name').value.trim();
-let phone=document.getElementById('phone').value.trim();
-let farm=document.getElementById('farm').value.trim()||'AG-POULTRY-001';
-let pass=document.getElementById('password').value.trim();
-if(!phone||pass.length<6){document.getElementById('msg').innerHTML='<b style="color:red">Phone + 6 char password needed</b>';return;}
-let key=genKey(phone,farm);
-currentKey=key;
-let user={name:name,phone:phone,farm:farm,password:pass,accountKey:key,created:new Date().toISOString()};
-localStorage.setItem('agriverse_user_'+phone,JSON.stringify(user));
-localStorage.setItem('agriverse_current',phone);
-localStorage.setItem('agriverse_key',key);
-document.getElementById('accountKey').innerText=key;
-document.getElementById('keybox').style.display='block';
-document.getElementById('msg').innerHTML='<b style="color:green">✅ Account created — '+farm+'</b><br><br><button class="btn-green" onclick="location.href=\'dashboard.html\'">Go Dashboard</button>';
-}
-function signIn(){
-let phone=document.getElementById('phone').value.trim();
-let pass=document.getElementById('password').value.trim();
-if(!phone||!pass){document.getElementById('msg').innerHTML='<b style="color:red">Phone + Password or Account Key needed</b>';return;}
-let raw=localStorage.getItem('agriverse_user_'+phone);
-if(raw){
-let u=JSON.parse(raw);
-if(u.password===pass||u.accountKey===pass){
-localStorage.setItem('agriverse_current',phone);
-localStorage.setItem('agriverse_key',u.accountKey);
-document.getElementById('msg').innerHTML='<b style="color:green">✅ Welcome '+u.name+' — '+u.farm+'</b><br><br><button class="btn-green" onclick="location.href=\'dashboard.html\'">Go Dashboard</button>';
-return;
-}
-}
-let keys=Object.keys(localStorage).filter(k=>k.startsWith('agriverse_user_'));
-for(let k of keys){
-let u=JSON.parse(localStorage.getItem(k));
-if(u.accountKey===pass){
-localStorage.setItem('agriverse_current',u.phone);
-localStorage.setItem('agriverse_key',u.accountKey);
-document.getElementById('msg').innerHTML='<b style="color:green">✅ Signed in with Key — '+u.name+'</b><br><br><button class="btn-green" onclick="location.href=\'dashboard.html\'">Go Dashboard</button>';
-return;
-}
-}
-document.getElementById('msg').innerHTML='<b style="color:red">No account found — Sign Up first</b>';
-}
-function copyKey(){
-navigator.clipboard.writeText(currentKey);
-document.getElementById('msg').innerHTML='<b style="color:green">Key copied</b>';
+
+function loginFarmer(){
+  const key = document.getElementById('agKeyLogin').value.trim();
+  if(!key){ alert("Enter AG Key"); return; }
+  localStorage.setItem('ag_key', key);
+  alert("Logged in as " + key);
+  window.location.href = "/dashboard.html";
 }
 </script>
 </body>
