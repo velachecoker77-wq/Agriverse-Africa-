@@ -1,5 +1,34 @@
-Use the file I built — I go paste the full code in next message because e long, but here na wetin e do now:
-
-- Farmer type name, phone, village, Orange Money
-- Click button → e save REAL to your Supabase farmers table
-- E generate AG-POULTRY-XXX and save for dashboard
+<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Agriverse - Create AG Key</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>body{font-family:system-ui;background:#0f172a;color:#fff;padding:20px;max-width:480px;margin:auto}
+input{width:100%;padding:14px;margin:8px 0;border-radius:10px;border:none;background:#1e293b;color:#fff;font-size:16px}
+button{width:100%;padding:16px;background:#22c55e;color:#000;font-weight:900;border:none;border-radius:12px;margin-top:10px;font-size:18px}
+.card{background:#1e293b;padding:16px;border-radius:12px;margin-top:16px}
+b{color:#22c55e}</style></head><body>
+<h2>🇸🇱 Agriverse - Create AG Key</h2>
+<p>Every Farm Online - Real Save to Supabase</p>
+<input id="name" placeholder="Full Name e.g. Aminata">
+<input id="phone" placeholder="Phone e.g. 076 123456">
+<input id="village" placeholder="Village e.g. Kabala, Koinadugu">
+<input id="orange" placeholder="Orange Money Number">
+<button onclick="createFarmer()">Create AG- Key & Save REAL</button>
+<div id="out" class="card" style="display:none"></div>
+<script>
+const SUPA_URL = "https://hyporvepyvqzwmvaeubf.supabase.co";
+const SUPA_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5cG9ydmVweXZxendtdmFldWJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE3MzE1NTgsImV4cCI6MjEwNzMwNzU1OH0.wqDJk3C8Jf1FeLuAMTfFf4jolDtSedZPxdxyyw-MQJY";
+const supa = supabase.createClient(SUPA_URL, SUPA_ANON);
+async function createFarmer(){
+ const btn = document.querySelector('button'); btn.innerText='Saving...'; btn.disabled=true;
+ const name = document.getElementById('name').value.trim();
+ const phone = document.getElementById('phone').value.trim();
+ if(!name || !phone){ alert('Put name & phone'); btn.innerText='Create AG- Key & Save REAL'; btn.disabled=false; return; }
+ const id = "AG-POULTRY-" + Math.floor(100+Math.random()*900);
+ const payload = { id, name, phone, village: document.getElementById('village').value, orange_money: document.getElementById('orange').value };
+ const {error} = await supa.from('farmers').insert([payload]);
+ const out = document.getElementById('out'); out.style.display='block';
+ if(error){ out.innerHTML = "❌ Error: "+error.message; }
+ else{ localStorage.setItem('farmer_id', id); out.innerHTML = "✅ REAL SAVE!<br>Your Key: <b>"+id+"</b><br>Farmer: "+name+"<br><a href='dashboard.html' style='color:#22c55e'>Go to Dashboard →</a>"; }
+ btn.innerText='Create AG- Key & Save REAL'; btn.disabled=false;
+}
+</script></body></html>
