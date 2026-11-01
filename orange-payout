@@ -1,0 +1,26 @@
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+
+serve(async (req) => {
+  const { phone, amount, batch_id } = await req.json()
+  
+  // --- REPLACE WITH YOUR REAL ORANGE KEYS ---
+  const ORANGE_AUTH = "Bearer YOUR_ORANGE_TOKEN_HERE"
+  const MERCHANT = "YOUR_MERCHANT_NUMBER"
+  
+  const res = await fetch("https://api.orange.com/orange-money-webpay/dev/v1/cashout", {
+    method: "POST",
+    headers: {
+      "Authorization": ORANGE_AUTH,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      merchant_id: MERCHANT,
+      amount: amount,
+      phone_number: phone,
+      reference: batch_id
+    })
+  })
+  
+  const data = await res.json()
+  return new Response(JSON.stringify(data), { headers: { "Access-Control-Allow-Origin": "*" } })
+})
