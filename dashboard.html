@@ -1,48 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agriverse OS — Every Farm Online Dashboard</title>
-<link rel="stylesheet" href="style.css">
-<style>
-body{background:#0f172a;color:#fff;margin:0;font-family:Inter,system-ui}
-header{background:#0a1f0a;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e3a1e}
-header b{color:#22c55e}
-.live{background:#22c55e;color:#000;padding:4px 10px;border-radius:20px;font-weight:800;font-size:11px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;padding:18px}
-.box{background:#1e293b;border-radius:16px;padding:16px;border:1px solid #334155}
-.box b{color:#7dd3a0;font-size:11px;letter-spacing:1px}
-.box h1{margin:8px 0;font-size:28px}
-.box small{opacity:0.7}
-table{width:100%;border-collapse:collapse;margin-top:10px}
-th,td{padding:10px;border-bottom:1px solid #334155;text-align:left;font-size:12px}
-th{color:#7dd3a0}
-.btn{padding:6px 10px;border-radius:6px;border:none;font-weight:700;font-size:11px;cursor:pointer}
-.btn-green{background:#22c55e;color:#000}
-.btn-blue{background:#0ea5e9;color:#fff}
-.btn-gray{background:#334155;color:#fff}
-.tag{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:800}
-.tag-crop{background:#a3e635;color:#000}
-.tag-livestock{background:#facc15;color:#000}
-.tag-fish{background:#38bdf8;color:#000}
-.tr-green{color:#22c55e;font-weight:700}
-</style>
-</head>
-<body>
-<header>
-<div><b>AGRIVERSE OS</b> — Every Farm Online • Sherbro Node 001 • Data stays in Salone</div>
-<div class="live">● LIVE</div>
-</header>
-
-<div class="grid">
- <div class="box"><b>QR SCANS TODAY</b><h1>847</h1><small>↑ 12% vs yesterday • Consumers verifying farms</small></div>
- <div class="box"><b>POST-HARVEST LOSS</b><h1>3.2% ↓</h1><small>Record Low • Was 20-40% • Saved 3.8T this month</small></div>
- <div class="box"><b>TOTAL FARMS ONLINE</b><h1>12</h1><small>Crops 5 • Livestock 4 • Fisheries 3 • First in Africa</small></div>
- <div class="box"><b>FARMER EARNINGS</b><h1>Le 48.5M</h1><small>80% to farmers via Orange Money • +9.4% MoM</small></div>
-</div>
-
-<div style="padding:0 18px 18px">
-<div class="box">
-<h3 style="margin:0">Live Farms — Powers In Your Hands (You Control, Not Us)</h3>
-<p style="opacity:0.7;font-size:12px;margin:4
+<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Dashboard - REAL</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>body{font-family:system-ui;background:#0f172a;color:#fff;padding:16px;max-width:600px;margin:auto}
+input,select{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:none;background:#1e293b;color:#fff}
+button{width:100%;padding:14px;background:#22c55e;color:#000;font-weight:800;border:none;border-radius:10px;margin-top:8px}
+.card{background:#1e293b;padding:12px;border-radius:10px;margin:10px 0;font-size:14px}
+.hash{font-family:monospace;color:#facc15;word-break:break-all}</style></head><body>
+<h2>Dashboard - Add Batch (REAL)</h2>
+<div id="farmerInfo" class="card"></div>
+<select id="product"><option>Eggs</option><option>Rice</option><option>Cassava</option><option>Chicken</option></select>
+<input id="qty" placeholder="Qty e.g. 30 crates / 50kg">
+<input id="damage" type="number" placeholder="Damage % e.g. 2">
+<button onclick="getGPS()">📍 Get GPS Location</button>
+<p id="gpsText">GPS: not yet - click button</p>
+<button onclick="addBatch()" style="background:#38bdf8">Save Batch + Generate Hash (REAL)</button>
+<div id="out" class="card" style="display:none"></div>
+<h3>Your Batches (from Supabase)</h3><div id="list"></div>
+<script>
+const SUPA_URL = "https://hyporvepyvqzwmvaeubf.supabase.co";
+const SUPA_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5cG9ydmVweXZxendtdmFldWJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE3MzE1NTgsImV4cCI6MjEwNzMwNzU1OH0.wqDJk3C8Jf1FeLuAMTfFf4jolDtSedZPxdxyyw-MQJY";
+const supa = supabase.createClient(SUPA_URL, SUPA_ANON);
+let currentGPS = "";
+let farmerId = localStorage.getItem('farmer_id') || "AG-POULTRY-001";
+document.getElementById('farmerInfo').innerHTML = "Farmer ID: <b>"+farmerId+"</b> <br><a href='auth.html' style='color:#22c55e'>Change Farmer</a>";
+function getGPS(){
+ if(!navigator.geolocation){ alert('GPS no dey'); return; }
+ navigator.geolocation.getCurrentPosition(p=>{
+   currentGPS = p.coords.latitude.toFixed(6)+","+p.coords.longitude.toFixed(6);
+   document.getElementById('gpsText').innerText = "GPS: "+currentGPS;
+ });
+}
+async function sha256(msg){
+ const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+ return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function addBatch(){
+ const product = document.getElementById('product').value;
+ const qty = document.getElementById('qty').value;
+ const damage = document.getElementById('damage').value || 0;
+ if(!qty){ alert('Put qty'); return; }
+ const batch_id = "SL-KO-"+new Date().toISOString().slice(2,10).replace(/-/g,'')+"-"+Math.floor(100+Math.random()*900);
+ const raw = batch_id+"|"+farmerId+"|"+product+"|"+qty+"|"+damage+"|"+currentGPS+"|"+Date.now();
+ const hash = await sha256(raw);
+ const payload = { batch_id, farm_id: farmerId, product, qty, damage: parseInt(damage), gps: currentGPS, hash, photo_url: "" };
+ const {error} = await supa.from('batches').insert([payload]);
+ const out = document.getElementById('out'); out.style.display='block';
+ if(error){ out.innerHTML = "❌ "+error.message; }
+ else{ out.innerHTML = "✅ Saved REAL to Supabase!<br>Batch: <b>"+batch_id+"</b><br><span class='hash'>Hash: "+hash+"</span><br>GPS: "+currentGPS; loadBatches(); }
+}
+async function loadBatches(){
+ const {data} = await supa.from('batches').select('*').eq('farm_id', farmerId).order('created_at',{ascending:false}).limit(10);
+ const list = document.getElementById('list'); list.innerHTML = "";
+ (data||[]).forEach(b=>{
+   list.innerHTML += "<div class='card'><b>"+b.batch_id+"</b><br>"+b.product+" - "+b.qty+"<br>Damage: "+b.damage+"%<br>GPS: "+b.gps+"<br><span class='hash'>"+b.hash.slice(0,32)+"...</span></div>";
+ });
+}
+loadBatches();
+</script></body></html>
