@@ -1,114 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agriverse Africa — Every Farm Online</title>
-<style>
-:root{--green:#0a2a12;--lime:#7CFF6B;--card:#111;--b:#1e3a24}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#000;color:#fff;font-family:Inter,system-ui;min-height:100vh}
-header{background:#0a1a0f;border-bottom:2px solid var(--b);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
-.logo{font-weight:900;color:var(--lime);letter-spacing:.5px}
-.nav{display:flex;gap:8px;flex-wrap:wrap}
-.nav a{padding:6px 12px;border-radius:999px;font-size:12px;text-decoration:none;font-weight:700}
-.btn-lime{background:var(--lime);color:#000}
-.btn-dark{background:#1a2e1f;color:var(--lime);border:1px solid var(--b)}
-.hero{background:radial-gradient(800px 400px at 20% 0%, #1a4d25, transparent),var(--green);margin:16px;border-radius:20px;padding:24px;border:1px solid var(--b)}
-.hero h1{font-size:22px;line-height:1.2;max-width:700px}
-.hero h1 span{color:var(--lime)}
-.pills{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap}
-.pill{background:#000;border:1px solid var(--b);padding:6px 10px;border-radius:999px;font-size:11px}
-.actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
-.actions a{padding:12px 18px;border-radius:999px;font-weight:800;text-decoration:none;font-size:13px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:0 16px}
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agriverse Africa</title>
+<style>body{margin:0;background:#000;color:#fff;font-family:sans-serif}
+header{padding:12px 16px;background:#0a1a0f;display:flex;justify-content:space-between;border-bottom:1px solid #1e3a24}
+a.btn{padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:800;font-size:13px}
+.lime{background:#7CFF6B;color:#000}.dark{background:#111;color:#7CFF6B;border:1px solid #1e3a24}
+.hero{margin:16px;padding:20px;background:#0a2a12;border-radius:20px;border:1px solid #1e3a24}
+.grid{padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:700px){.grid{grid-template-columns:1fr}}
-.card{background:#0e1a11;border:1px solid var(--b);border-radius:16px;padding:16px}
-.card h3{color:var(--lime);font-size:12px;margin-bottom:10px;letter-spacing:1px}
-.card .row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px dashed #1a2e1f}
-.card button,.card a.btn{width:100%;margin-top:12px;padding:10px;border-radius:10px;border:none;background:#111;color:var(--lime);font-weight:700;border:1px solid var(--b);text-align:center;display:block;text-decoration:none}
-.big-actions{display:flex;gap:10px;padding:16px;flex-wrap:wrap}
-.big-actions a{flex:1;min-width:140px;text-align:center;padding:14px;border-radius:12px;font-weight:900;text-decoration:none}
-.a1{background:var(--lime);color:#000}
-.a2{background:#ffcc00;color:#000}
-.a3{background:#5ecbff;color:#000}
-.footer{background:var(--green);margin:16px;border-radius:16px;padding:16px;border:1px solid var(--b);text-align:center;font-size:12px}
-</style>
-</head>
-<body>
-<header>
-<div class="logo">AGRIVERSE AFRICA — Every Farm Online</div>
-<div class="nav">
-<a href="auth.html" class="btn-lime">Sign In</a>
-<a href="dashboard.html" class="btn-dark">Dashboard</a>
-<a href="vault.html" class="btn-dark">Vault</a>
-<a href="qr.html" class="btn-dark">QR</a>
-</div>
-</header>
-
+.card{background:#0e1a11;border:1px solid #1e3a24;border-radius:16px;padding:14px}
+.big{display:flex;gap:10px;padding:16px}.big a{flex:1;text-align:center;padding:14px;border-radius:12px;font-weight:900;text-decoration:none}
+</style></head><body>
+<header><b style="color:#7CFF6B">AGRIVERSE AFRICA</b><div><a class="btn lime" href="auth.html">Sign In</a> <a class="btn dark" href="dashboard.html">Dashboard</a></div></header>
 <div class="hero">
-<h1>First time in Africa your farm is digitally alive. <span>IoT + Data Sovereignty + 80% to Farmer.</span></h1>
-<div class="pills">
-<span class="pill">🔥 12 Farms Live</span>
-<span class="pill">📍 Sherbro Node 001</span>
-<span class="pill">💰 Orange Money 80%</span>
-</div>
-<p style="font-size:11px;opacity:.6;margin-top:6px">Genetic service — poultry, cassava, rice, fish, goat — same taste — data stays in Salone — hash cannot fake — Data Sovereignty Act 2023</p>
-<div class="actions">
-<a href="auth.html" class="btn-lime">Create Account Key — AG-</a>
-<a href="qr.html" class="btn-dark">Generate QR — Copy & Cut</a>
+<h2>Every Farm Online. <span style="color:#7CFF6B">IoT + Data Sovereignty + 80% to Farmer.</span></h2>
+<div class="big">
+<a href="agristack.html" style="background:#7CFF6B;color:#000">Agristack</a>
+<a href="cropcore.html" style="background:#ffcc00;color:#000">Cropcore</a>
+<a href="farmdoctor.html" style="background:#5ecbff;color:#000">Farm Doctor</a>
 </div>
 </div>
-
-<div class="big-actions">
-<a href="agristack.html" class="a1">🌾 Agristack</a>
-<a href="cropcore.html" class="a2">🌱 Cropcore</a>
-<a href="farmdoctor.html" class="a3">🩺 Farm Doctor</a>
-</div>
-
 <div class="grid">
-<div class="card">
-<h3>1. Farm Passport (Vault)</h3>
-<div class="row"><span>Batch ID</span><span>SL-KO-1101-001</span></div>
-<div class="row"><span>Farm ID</span><span>AG-POULTRY-001</span></div>
-<div class="row"><span>GPS</span><span>8.3821, -12.2122 Kossah</span></div>
-<div class="row"><span>Hash</span><span>0x7f2ac...cannot fake</span></div>
-<a href="vault.html" class="btn">Open Vault Demo</a>
+<div class="card"><h4 style="color:#7CFF6B">Farm Passport</h4><p>Vault + Hash + GPS</p><a class="btn dark" href="vault.html" style="display:block;text-align:center">Open Vault</a></div>
+<div class="card"><h4 style="color:#7CFF6B">Wallet 80%</h4><p>Orange Money + 80% to farmer</p><a class="btn dark" href="wallet.html" style="display:block;text-align:center">Wallet</a></div>
+<div class="card"><h4 style="color:#7CFF6B">IoT Table</h4><p>Poultry, cassava, fish, goat</p><a class="btn dark" href="dashboard.html" style="display:block;text-align:center">Dashboard</a></div>
+<div class="card"><h4 style="color:#7CFF6B">QR Sticker</h4><p>Copy & Cut</p><a class="btn lime" href="qr.html" style="display:block;text-align:center">Generate QR</a></div>
 </div>
-
-<div class="card">
-<h3>2. Wallet — 80% Farmer</h3>
-<div class="row"><span>Sale</span><span>Le 520,000</span></div>
-<div class="row"><span>Farmer 80%</span><span>Le 416,000</span></div>
-<div class="row"><span>Agriverse 15%</span><span>Le 78,000</span></div>
-<div class="row"><span>Node 5%</span><span>Le 26,000</span></div>
-<a href="wallet.html" class="btn">Link Wallet to AG- Key</a>
-</div>
-
-<div class="card">
-<h3>3. IoT + General Pilot Table</h3>
-<p style="font-size:11px;opacity:.7">12 items — 1 table — poultry, eggs, cassava, fish, goat — photo + damage + GPS</p>
-<div class="row"><span>AG-POULTRY-001</span><span>1,176 eggs</span></div>
-<div class="row"><span>AG-CASSAVA-001</span><span>2.5T cassava</span></div>
-<div class="row"><span>AG-FISH-001</span><span>340kg Tombo</span></div>
-<div class="row"><span>AG-GOAT-001</span><span>35 heads Moyamba</span></div>
-<a href="dashboard.html" class="btn">Open Dashboard</a>
-</div>
-
-<div class="card">
-<h3>4. QR Sticker — Copy & Cut</h3>
-<p style="font-size:11px;opacity:.7">Generate QR — Print — Cut dotted line — Stick on order/track box — scan opens vault</p>
-<p style="background:#000;padding:8px;border-radius:8px;font-size:11px;margin-top:8px;word-break:break-all">www.agriverseafrica.com/vault.html?batch=SL-1101-001<br>Hash cannot fake — Sherbro Node 001</p>
-<a href="qr.html" class="btn" style="background:var(--lime);color:#000">Generate QR Full Code</a>
-</div>
-</div>
-
-<div class="footer">
-<b>If it is to be, it is up to us — Sierra Leone Owns Its Food Data</b><br>
-No foreign cloud — Sherbro Node 001 Freetown — Orange Money 80% — Every Farm Online — Farm Passport Vault verified
-<br><br>
-<a href="auth.html" class="btn-lime" style="padding:8px 16px;border-radius:999px;text-decoration:none;color:#000;font-weight:800">Sign Up — Get AG- Key</a>
-</div>
-
-</body>
-</html>
+</body></html>
