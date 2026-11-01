@@ -1,58 +1,20 @@
-<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
-<title>Wallet - 80% Orange Money</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>body{font-family:system-ui;background:#0f172a;color:#fff;padding:16px;max-width:600px;margin:auto}
-.card{background:#1e293b;padding:14px;border-radius:12px;margin:10px 0}
-input,select{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:none;background:#1e293b;color:#fff;font-size:16px}
-button{width:100%;padding:14px;background:#f97316;color:#fff;font-weight:800;border:none;border-radius:10px;font-size:16px}
-.green{color:#22c55e} .orange{color:#fb923c}
-b{color:#fff}</style></head><body>
-<h2>💰 Wallet - 80% Farmer</h2>
-<div class="card">
-<b>How e dey work (REAL):</b><br>
-Sale 100 Le → Farmer 80 Le (Orange Money) → Agriverse 15 Le → Node 5 Le<br>
-Every sale get hash proof, no fake!
-</div>
-<select id="batchSelect" class="card" style="width:100%;background:#1e293b;color:#fff;padding:12px;border:none;border-radius:8px"><option>Loading batches from Supabase...</option></select>
-<input id="saleAmount" type="number" placeholder="Sale Amount Le e.g. 1500" oninput="calc()">
-<div id="calc" class="card">Type amount to see split</div>
-<input id="buyerPhone" placeholder="Farmer Orange Money Number e.g. 076...">
-<button onclick="payout()">Pay 80% via Orange Money (Simulate REAL Save)</button>
+<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Wallet 80%</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>body{font-family:system-ui;background:#0f172a;color:#fff;padding:16px;max-width:600px;margin:auto}.card{background:#1e293b;padding:14px;border-radius:12px;margin:10px 0}input,select{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:none;background:#334155;color:#fff}button{width:100%;padding:14px;background:#f97316;color:#fff;font-weight:800;border:none;border-radius:10px}</style></head><body>
+<h2>💰 Wallet - Test with Velache</h2>
+<div id="info" class="card"></div>
+<select id="batchSelect" style="background:#1e293b;color:#fff"></select>
+<input id="saleAmount" type="number" placeholder="Sale Le e.g. 1000" oninput="calc()">
+<div id="calc" class="card">Type amount</div>
+<input id="phone" placeholder="Orange Money e.g. 079175093" value="079175093">
+<button onclick="payout()">Pay 80% REAL Save</button>
 <div id="out" class="card" style="display:none"></div>
-<h3>Transactions (from Supabase)</h3><div id="txList"></div>
+<div id="list"></div>
 <script>
-const SUPA_URL = "https://hyporvepyvqzwmvaeubf.supabase.co";
-const SUPA_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5cG9ydmVweXZxendtdmFldWJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE3MzE1NTgsImV4cCI6MjEwNzMwNzU1OH0.wqDJk3C8Jf1FeLuAMTfFf4jolDtSedZPxdxyyw-MQJY";
-const supa = supabase.createClient(SUPA_URL, SUPA_ANON);
-let farmerId = localStorage.getItem('farmer_id') || "AG-POULTRY-001";
-
-async function loadBatches(){
- const {data} = await supa.from('batches').select('*').order('created_at',{ascending:false}).limit(20);
- const sel = document.getElementById('batchSelect'); sel.innerHTML="";
- if(!data || data.length==0){ sel.innerHTML="<option>No batches yet - go dashboard</option>"; return; }
- data.forEach(b=>{ sel.innerHTML += "<option value='"+b.batch_id+"'>"+b.batch_id+" - "+b.product+" "+b.qty+"</option>"; });
-}
-function calc(){
- const amt = parseFloat(document.getElementById('saleAmount').value)||0;
- const farmer = Math.floor(amt*0.8); const agri = Math.floor(amt*0.15); const node = amt - farmer - agri;
- document.getElementById('calc').innerHTML = "Sale: <b>"+amt+" Le</b><br><span class='green'>Farmer 80% = "+farmer+" Le → Orange Money</span><br>Agriverse 15% = "+agri+" Le<br>Node 5% = "+node+" Le";
- return {farmer, agri, node, amt};
-}
-async function payout(){
- const {farmer, agri, node, amt} = calc();
- const batch_id = document.getElementById('batchSelect').value;
- const phone = document.getElementById('buyerPhone').value;
- if(!amt || !phone){ alert('Put amount & Orange Money number'); return; }
- const payload = { batch_id, sale_amount: amt, farmer_80: farmer, agriverse_15: agri, node_5: node, phone, status: 'paid_simulated' };
- const {error} = await supa.from('wallet_tx').insert([payload]);
- const out = document.getElementById('out'); out.style.display='block';
- if(error){ out.innerHTML = "❌ "+error.message; }
- else{ out.innerHTML = "✅ PAID! Saved to Supabase REAL<br>Batch: "+batch_id+"<br>Farmer received: <b class='green'>"+farmer+" Le</b> to "+phone+"<br><br>When you get Orange Money API key from Orange SL, we replace this with real API call."; loadTx(); }
-}
-async function loadTx(){
- const {data} = await supa.from('wallet_tx').select('*').order('created_at',{ascending:false}).limit(10);
- const list = document.getElementById('txList'); list.innerHTML="";
- (data||[]).forEach(t=>{ list.innerHTML += "<div class='card'>"+t.batch_id+" → "+t.sale_amount+" Le<br>Farmer: <b class='green'>"+t.farmer_80+" Le</b> to "+t.phone+"<br>Status: "+t.status+"<br>"+new Date(t.created_at).toLocaleString()+"</div>"; });
-}
-loadBatches(); loadTx(); calc();
+const supa = supabase.createClient("https://hyporvepyvqzwmvaeubf.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5cG9ydmVweXZxendtdmFldWJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE3MzE1NTgsImV4cCI6MjEwNzMwNzU1OH0.wqDJk3C8Jf1FeLuAMTfFf4jolDtSedZPxdxyyw-MQJY");
+let fid = localStorage.getItem('farmer_id')||"AG-POULTRY-346";
+document.getElementById('info').innerHTML="Farmer: "+fid;
+async function loadB(){const{data}=await supa.from('batches').select('*').order('created_at',{ascending:false}).limit(20);const s=document.getElementById('batchSelect');s.innerHTML="";if(!data||!data.length){s.innerHTML="<option>No batches</option>";return;}data.forEach(b=>s.innerHTML+=`<option value="${b.batch_id}">${b.batch_id} - ${b.product} ${b.qty}</option>`);}
+function calc(){const a=parseFloat(document.getElementById('saleAmount').value)||0;const f=Math.floor(a*0.8),ag=Math.floor(a*0.15),n=a-f-ag;document.getElementById('calc').innerHTML=`Sale ${a} Le<br>Farmer 80% = ${f} Le → Orange<br>Agriverse 15% = ${ag}<br>Node 5% = ${n}`;return{a,f,ag,n}}
+async function payout(){const{a,f,ag,n}=calc();const batch=document.getElementById('batchSelect').value;const ph=document.getElementById('phone').value;if(!a||!ph){alert('Amount & phone');return;}const{error}=await supa.from('wallet_tx').insert([{batch_id:batch,sale_amount:a,farmer_80:f,agriverse_15:ag,node_5:n,phone:ph,status:'paid_simulated'}]);const o=document.getElementById('out');o.style.display='block';if(error){o.innerHTML="❌ "+error.message;}else{o.innerHTML=`✅ PAID! ${f} Le to ${ph} for ${batch} SAVED REAL!`;loadTx();}}
+async function loadTx(){const{data}=await supa.from('wallet_tx').select('*').order('created_at',{ascending:false}).limit(10);document.getElementById('list').innerHTML=(data||[]).map(t=>`<div class='card'>${t.batch_id} → ${t.sale_amount} Le<br>Farmer ${t.farmer_80} Le to ${t.phone}<br>${new Date(t.created_at).toLocaleString()}</div>`).join('');}
+loadB();loadTx();
 </script></body></html>
